@@ -38,6 +38,9 @@ then
          sudo apt-get install -y python3-pip
          sudo pip3 install --upgrade pip
          sudo ln -sf /usr/bin/python3 /usr/bin/python
+         sudo apt-get install -y python-boto
+         sudo apt-get install -y python-boto3
+         sudo pip3 install -y awscli
        elif [ "${piver}" == "3" ]
        then
          echo "BINGO it is 3"
