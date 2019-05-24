@@ -40,10 +40,16 @@ then
          sudo ln -sf /usr/bin/python3 /usr/bin/python
          sudo apt-get install -y python-boto
          sudo apt-get install -y python-boto3
-         sudo pip3 install -y awscli
+         sudo pip3 install awscli
+         sudo pip3 install boto
+         sudo pip3 install boto3
+      
        elif [ "${piver}" == "3" ]
        then
          echo "BINGO it is 3"
+         sudo pip3 install awscli
+         sudo pip3 install boto
+         sudo pip3 install boto3
        else
          echo "Python Not installed"
        fi
