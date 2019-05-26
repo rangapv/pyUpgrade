@@ -25,31 +25,37 @@ then
         f1=$(>t2.txt)
         mod=$(chmod 777 t2.txt)
         python -V > ./t2.txt 2>&1
-        pyver=$(cat ./t2.txt | awk '{split($0,a," ");print a[2]}') 
+        python3 -V > ./t3.txt 2>&1
+	piver3=$(python3 -V 2>&1)
+	piver31=$( echo "${piver3}" | awk '{split($0,a," ");print a[2]}')
+	piver32=$( echo "${piver31}" | awk '{split($0,a,".");print a[1]}')
+	echo "P1 + ${piver3}"
+	echo "P2 + ${piver31}"
+	echo "P3 + ${piver32}"
+	pyver=$(cat ./t2.txt | awk '{split($0,a," ");print a[2]}') 
         echo "${pyver}"
         piver=$( echo "${pyver}" | awk '{split($0,a,".");print a[1]}')
         echo "${piver}"
        # echo "$(( $pyver / 3 ))"
       
-       if [ "${piver}" == "2" ]
+       if [ "${piver}" == "2" ] || [ "${piver32}" == "3" ]
        then
          echo "BINGO"
+         sudo ln -sf /usr/bin/python3 /usr/bin/python
          sudo apt-get -y upgrade
          sudo apt-get install -y python3-pip
          sudo pip3 install --upgrade pip
-         sudo ln -sf /usr/bin/python3 /usr/bin/python
-         sudo apt-get install -y python-boto
-         sudo apt-get install -y python-boto3
          sudo pip3 install awscli
          sudo pip3 install boto
          sudo pip3 install boto3
       
-       elif [ "${piver}" == "3" ]
+       elif [ "${piver32}" == "3" ]
        then
          echo "BINGO it is 3"
          sudo pip3 install awscli
          sudo pip3 install boto
          sudo pip3 install boto3
+         sudo ln -sf /usr/bin/python3 /usr/bin/python
        else
          echo "Python Not installed"
        fi
