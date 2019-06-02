@@ -22,8 +22,6 @@ then
 	fi
         pi=$(python --version)
         pi1="${pi,,}"
-        f1=$(>t2.txt)
-        mod=$(chmod 777 t2.txt)
 	piver=$(python -V 2>&1)
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
@@ -44,6 +42,8 @@ then
          		sudo pip3 install awscli
          		sudo pip3 install boto
          		sudo pip3 install boto3	
+			sudo apt-get install -y python-boto
+			sudo apt-get install -y python-boto3 
 		;;
 		3)
 		 	echo "Python Version 3"
@@ -53,7 +53,9 @@ then
          		sudo pip3 install --upgrade pip
          		sudo pip3 install awscli
          		sudo pip3 install boto
-         		sudo pip3 install boto3	
+         		sudo pip3 install boto3
+			sudo apt-get install -y python-boto
+                        sudo apt-get install -y python-boto3
 		;;
 		*)
 			echo "No Python Installed in this BOX"
