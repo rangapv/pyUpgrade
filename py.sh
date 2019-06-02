@@ -37,7 +37,8 @@ then
 			echo "Python Version 2 upgrading to 3"
 			sudo ln -sf /usr/bin/python3 /usr/bin/python
          		sudo apt-get -y upgrade
-         		sudo apt-get install -y python3-pip
+         	        sudo apt-get update
+ 			sudo apt-get install -y python3-pip
          		sudo pip3 install --upgrade pip
          		sudo pip3 install awscli
          		sudo pip3 install boto
@@ -49,6 +50,7 @@ then
 		 	echo "Python Version 3"
 			sudo ln -sf /usr/bin/python3 /usr/bin/python
          		sudo apt-get -y upgrade
+			sudo apt-get update
          		sudo apt-get install -y python3-pip
          		sudo pip3 install --upgrade pip
          		sudo pip3 install awscli
