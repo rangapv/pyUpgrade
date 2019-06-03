@@ -84,9 +84,9 @@ then
 		;;
 		*)
 			echo "No Python Installed in this BOX"
-			sudo $cm1 install -y python3
-			sudo ln -sf /usr/bin/python3 /usr/bin/python
+			sudo $cm1 install -y python
                         sudo $cm1 -y upgrade
+			sudo ln -sf /usr/bin/python3 /usr/bin/python
                         sudo $cm1 update
                         sudo $cm1 install -y python3-pip
                         sudo pip3 install --upgrade pip
