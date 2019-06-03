@@ -6,6 +6,7 @@ u1=$(cat /etc/*-release | grep ubuntu)
 f1=$(cat /etc/*-release | grep ID= | grep fedora)
 c1=$(cat /etc/*-release | grep ID= | grep centos)
 s1=$(cat /etc/*-release | grep suse)
+count=0
 
 if [ ! -z "$u1" ]
 then 
@@ -19,8 +20,30 @@ then
    	echo "IT IS UBUNTU"
    	cm1="apt-get"
    	cm2="apt-key"
+	count=1
 	fi
-        pi=$(python --version)
+
+
+elif [ ! -z "$f1" ]
+then
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+        ki="${ji,,}"
+        echo " it is fedora"
+	count=1
+
+elif [ ! -z "$c1" ]
+then
+	echo "it is a centos"
+        ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
+        ki="${ji,,}"
+        cm1="yum -y"
+	count=1
+else
+	echo "The distribution cannot be determined"
+fi
+if [ count > 0 ]
+then
+	pi=$(python --version)
         pi1="${pi,,}"
 	piver=$(python -V 2>&1)
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
@@ -36,44 +59,43 @@ then
 		2)
 			echo "Python Version 2 upgrading to 3"
 			sudo ln -sf /usr/bin/python3 /usr/bin/python
-         		sudo apt-get -y upgrade
-         	        sudo apt-get update
- 			sudo apt-get install -y python3-pip
+         		sudo $cm1 -y upgrade
+         	        sudo $cm1 update
+ 			sudo $cm1 install -y python3-pip
          		sudo pip3 install --upgrade pip
          		sudo pip3 install awscli
          		sudo pip3 install boto
          		sudo pip3 install boto3	
-			sudo apt-get install -y python-boto
-			sudo apt-get install -y python-boto3 
+			sudo $cm1 install -y python-boto
+			sudo $cm1 install -y python-boto3 
 		;;
 		3)
 		 	echo "Python Version 3"
 			sudo ln -sf /usr/bin/python3 /usr/bin/python
-         		sudo apt-get -y upgrade
-			sudo apt-get update
-         		sudo apt-get install -y python3-pip
+         		sudo $cm1 -y upgrade
+			sudo $cm1 update
+         		sudo $cm1 install -y python3-pip
          		sudo pip3 install --upgrade pip
          		sudo pip3 install awscli
          		sudo pip3 install boto
          		sudo pip3 install boto3
-			sudo apt-get install -y python-boto
-                        sudo apt-get install -y python-boto3
+			sudo $cm1 install -y python-boto
+                        sudo $cm1 install -y python-boto3
 		;;
 		*)
 			echo "No Python Installed in this BOX"
-			sudo apt-get install -y python3
+			sudo $cm1 install -y python3
 			sudo ln -sf /usr/bin/python3 /usr/bin/python
-                        sudo apt-get -y upgrade
-                        sudo apt-get update
-                        sudo apt-get install -y python3-pip
+                        sudo $cm1 -y upgrade
+                        sudo $cm1 update
+                        sudo $cm1 install -y python3-pip
                         sudo pip3 install --upgrade pip
                         sudo pip3 install awscli
                         sudo pip3 install boto
                         sudo pip3 install boto3
-                        sudo apt-get install -y python-boto
-                        sudo apt-get install -y python-boto3
+                        sudo $cm1 install -y python-boto
+                        sudo $cm1 install -y python-boto3
 			;;
 	esac
        # echo "$(( $pyver / 3 ))"
-
 fi
