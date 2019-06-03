@@ -61,7 +61,18 @@ then
 		;;
 		*)
 			echo "No Python Installed in this BOX"
-		;;
+			sudo apt-get install -y python3
+			sudo ln -sf /usr/bin/python3 /usr/bin/python
+                        sudo apt-get -y upgrade
+                        sudo apt-get update
+                        sudo apt-get install -y python3-pip
+                        sudo pip3 install --upgrade pip
+                        sudo pip3 install awscli
+                        sudo pip3 install boto
+                        sudo pip3 install boto3
+                        sudo apt-get install -y python-boto
+                        sudo apt-get install -y python-boto3
+			;;
 	esac
        # echo "$(( $pyver / 3 ))"
 
