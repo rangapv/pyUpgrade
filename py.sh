@@ -1,11 +1,15 @@
 #! /bin/bash
 li=$(uname -s)
-li2="${li,,}"
 
+mac=$(sw_vers | grep Mac)
+if [ -z "$mac" ]
+then
 u1=$(cat /etc/*-release | grep ubuntu)
 f1=$(cat /etc/*-release | grep ID= | grep fedora)
 c1=$(cat /etc/*-release | grep ID= | grep centos)
 s1=$(cat /etc/*-release | grep suse)
+fi
+
 count=0
 
 if [ ! -z "$u1" ]
@@ -38,13 +42,19 @@ then
         ki="${ji,,}"
         cm1="yum -y"
 	count=1
+
+elif [ ! -z "$mac" ]
+then
+	echo "It is a Mac"
+	cm1="brew"
+	count=1
 else
 	echo "The distribution cannot be determined"
 fi
 if [ count > 0 ]
 then
 	pi=$(python --version)
-        pi1="${pi,,}"
+        #pi1="${pi,,}"
 	piver=$(python -V 2>&1)
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
