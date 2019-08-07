@@ -8,6 +8,7 @@ u1=$(cat /etc/*-release | grep ubuntu)
 f1=$(cat /etc/*-release | grep ID= | grep fedora)
 c1=$(cat /etc/*-release | grep ID= | grep centos)
 s1=$(cat /etc/*-release | grep suse)
+d1=$(cat /etc/*-release | grep ID= | grep debian)
 fi
 
 count=0
@@ -26,7 +27,11 @@ then
    	cm2="apt-key"
 	count=1
 	fi
-
+elif [ ! -z "$d1" ]
+then
+	cm1="apt-get"
+	cm2="apt-key"
+	echo "IT IS DEbian"
 
 elif [ ! -z "$f1" ]
 then
