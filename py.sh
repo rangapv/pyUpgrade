@@ -32,6 +32,7 @@ then
 	cm1="apt-get"
 	cm2="apt-key"
 	echo "IT IS DEbian"
+        count=1
 
 elif [ ! -z "$f1" ]
 then
@@ -73,44 +74,39 @@ then
 	case ${piver12} in
 		2)
 			echo "Python Version 2 upgrading to 3"
-			sudo ln -sf /usr/bin/python3 /usr/bin/python
-         		sudo $cm1 -y upgrade
-         	        sudo $cm1 update
- 			sudo $cm1 install -y python3-pip
-         		sudo pip3 install --upgrade pip
-         		sudo pip3 install awscli
-         		sudo pip3 install boto
-         		sudo pip3 install boto3	
-			sudo $cm1 install -y python-boto
-			sudo $cm1 install -y python-boto3 
 		;;
 		3)
 		 	echo "Python Version 3"
-			sudo ln -sf /usr/bin/python3 /usr/bin/python
-         		sudo $cm1 -y upgrade
-			sudo $cm1 update
-         		sudo $cm1 install -y python3-pip
-         		sudo pip3 install --upgrade pip
-         		sudo pip3 install awscli
-         		sudo pip3 install boto
-         		sudo pip3 install boto3
-			sudo $cm1 install -y python-boto
-                        sudo $cm1 install -y python-boto3
 		;;
 		*)
 			echo "No Python Installed in this BOX"
 			sudo $cm1 install -y python
                         sudo $cm1 -y upgrade
-			sudo ln -sf /usr/bin/python3 /usr/bin/python
-                        sudo $cm1 update
-                        sudo $cm1 install -y python3-pip
-                        sudo pip3 install --upgrade pip
-                        sudo pip3 install awscli
-                        sudo pip3 install boto
-                        sudo pip3 install boto3
-                        sudo $cm1 install -y python-boto
-                        sudo $cm1 install -y python-boto3
-			;;
+	        ;;
 	esac
+
        # echo "$(( $pyver / 3 ))"
+
+                     
+
+              sudo ln -sf /usr/bin/python3 /usr/bin/python
+              sudo $cm1 -y upgrade
+              sudo $cm1 update
+              sudo $cm1 install -y python3-pip
+              sudo pip3 install --upgrade pip
+              sudo pip3 install awscli
+              sudo pip3 install boto
+              sudo pip3 install boto3
+              sudo $cm1 install -y python-boto
+              sudo $cm1 install -y python-boto3
+
+  
+              sudo $cm1 install -y wget
+              wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py
+              python3 ./get-pip.py
+
+   echo "Success"
+   echo `python -V`
+   echo `pip -V`
+
 fi
