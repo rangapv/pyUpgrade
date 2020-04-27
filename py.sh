@@ -80,6 +80,7 @@ then
 		;;
 		*)
 			echo "No Python Installed in this BOX"
+                        eval "sudo $cm1 update"
 			eval "sudo $cm1 install -y python"
                         eval "sudo $cm1 -y upgrade"
 	        ;;
@@ -89,9 +90,9 @@ then
 
                      
 
+              eval "sudo $cm1 update"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
               eval "sudo $cm1 -y upgrade"
-              eval "sudo $cm1 update"
               eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
               eval "sudo pip3 install awscli"
