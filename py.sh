@@ -80,8 +80,8 @@ then
 		;;
 		*)
 			echo "No Python Installed in this BOX"
-			sudo $cm1 install -y python
-                        sudo $cm1 -y upgrade
+			eval "sudo $cm1 install -y python"
+                        eval "sudo $cm1 -y upgrade"
 	        ;;
 	esac
 
@@ -89,21 +89,21 @@ then
 
                      
 
-              sudo ln -sf /usr/bin/python3 /usr/bin/python
-              sudo $cm1 -y upgrade
-              sudo $cm1 update
-              sudo $cm1 install -y python3-pip
-              sudo pip3 install --upgrade pip
-              sudo pip3 install awscli
-              sudo pip3 install boto
-              sudo pip3 install boto3
-              sudo $cm1 install -y python-boto
-              sudo $cm1 install -y python-boto3
+              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
+              eval "sudo $cm1 -y upgrade"
+              eval "sudo $cm1 update"
+              eval "sudo $cm1 install -y python3-pip"
+              eval "sudo pip3 install --upgrade pip"
+              eval "sudo pip3 install awscli"
+              eval "sudo pip3 install boto"
+              eval "sudo pip3 install boto3"
+              eval "sudo $cm1 install -y python-boto"
+              eval "sudo $cm1 install -y python-boto3"
 
   
-              sudo $cm1 install -y wget
-              wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py
-              python3 ./get-pip.py
+              eval "sudo $cm1 install -y wget"
+              eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
+              eval "python3 ./get-pip.py"
 
    echo "Success"
    echo `python -V`
