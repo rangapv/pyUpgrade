@@ -108,6 +108,6 @@ then
 
    echo "Success"
    echo `python -V`
-   echo `pip -V`
+   echo `pip3 -V`
 
 fi
