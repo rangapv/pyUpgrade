@@ -1,14 +1,24 @@
 #! /bin/bash
+set -E
 li=$(uname -s)
 
-mac=$(sw_vers | grep Mac)
+if [ $(echo "$li" | grep Linux) ]
+then
+  mac=""
+else
+  mac=$(sw_vers | grep Mac)
+fi
+
+
 if [ -z "$mac" ]
 then
-u1=$(cat /etc/*-release | grep ubuntu)
-f1=$(cat /etc/*-release | grep ID= | grep fedora)
-c1=$(cat /etc/*-release | grep ID= | grep centos)
-s1=$(cat /etc/*-release | grep suse)
-d1=$(cat /etc/*-release | grep ID= | grep debian)
+  u1=$(cat /etc/*-release | grep ubuntu)
+  f1=$(cat /etc/*-release | grep ID= | grep fedora)
+  c1=$(cat /etc/*-release | grep ID= | grep centos)
+  s1=$(cat /etc/*-release | grep suse)
+  d1=$(cat /etc/*-release | grep ID= | grep debian)
+else 
+  echo "Mac is not empty"
 fi
 
 count=0
@@ -24,6 +34,7 @@ then
 	then
    	echo "IT IS UBUNTU"
    	cm1="apt-get"
+        cm11="apt-add-repository"
    	cm2="apt-key"
 	count=1
 	fi
@@ -70,27 +81,35 @@ then
 	piver3=$(python3 -V 2>&1)
 	piver31=$( echo "${piver3}" | awk '{split($0,a," ");print a[2]}')
 	piver32=$( echo "${piver31}" | awk '{split($0,a,".");print a[1]}')
-
-	case ${piver12} in
+        piver33=$( echo "${piver31}" | awk '{split($0,a,".");print a[2]}')
+	
+        case ${piver12} in
 		2)
 			echo "Python Version 2 upgrading to 3"
 		;;
 		3)
 		 	echo "Python Version 3"
+                        if [[ $piver33 = "5" ]]
+                        then
+                         echo "Inside 3.6"
+                         sudo $cm11 -y ppa:deadsnakes/ppa
+                         sudo $cm1 -y update
+                         sudo $cm1 install -y python3.6
+                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                        fi
 		;;
 		*)
 			echo "No Python Installed in this BOX"
                         eval "sudo $cm1 update"
 			eval "sudo $cm1 install -y python"
+                        eval "sudo $cm11 -y ppa:deadsnakes/ppa"
+                        eval "sudo $cm1 -y update"
+                        eval "sudo $cm1 install -y python3.6"
+                        eval "sudo ln -sf /usr/bin/python3.6 /usr/bin/python3"
                         eval "sudo $cm1 -y upgrade"
 	        ;;
 	esac
 
-       # echo "$(( $pyver / 3 ))"
-
-                     
-              if [ -z "$mac" ]
-              then               
 
               eval "sudo $cm1 update"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
@@ -107,30 +126,8 @@ then
               eval "sudo $cm1 install -y wget"
               eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
               eval "python3 ./get-pip.py"
-             
-              else
-              eval "$cm1 update"
-              eval "ln -sf /usr/bin/python3 /usr/bin/python"
-              eval "$cm1 upgrade"
-              eval "$cm1 install python3-pip"
-              eval "pip3 install --upgrade pip"
-              eval "pip3 install awscli"
-              eval "pip3 install boto"
-              eval "pip3 install boto3"
-              eval "$cm1 install python-boto"
-              eval "$cm1 install python-boto3"
-
-
-              eval "$cm1 install wget"
-              eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
-              eval "python3 ./get-pip.py"
-
-
-              fi 
-
 
    echo "Success"
    echo `python -V`
    echo `pip3 -V`
-
 fi
