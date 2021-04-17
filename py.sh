@@ -34,8 +34,10 @@ then
 	then
    	echo "IT IS UBUNTU"
    	cm1="apt-get"
-        cm11="apt-add-repository"
+        cm11="add-apt-repository"
    	cm2="apt-key"
+        sudo $cm11 -y ppa:deadsnakes/ppa
+        sudo $cm1 -y update
 	count=1
 	fi
 elif [ ! -z "$d1" ]
@@ -58,6 +60,7 @@ then
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
         cm1="yum -y"
+        sudo yum install -y https://repo.ius.io/ius-release-el7.rpm
 	count=1
 
 elif [ ! -z "$mac" ]
@@ -91,25 +94,41 @@ then
 		 	echo "Python Version 3"
                         if [[ $piver33 = "5" ]]
                         then
-                         echo "Inside 3.6"
-                         sudo $cm11 -y ppa:deadsnakes/ppa
-                         sudo $cm1 -y update
                          sudo $cm1 install -y python3.6
                          sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                        echo "Inside 5"
+                        fi
+                        if [[ $piver33 = "6" ]]
+                        then
+                         sudo $cm1 install -y python3.7
+                         sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
+                        echo "Inside 6"
                         fi
 		;;
 		*)
 			echo "No Python Installed in this BOX"
                         eval "sudo $cm1 update"
-			eval "sudo $cm1 install -y python"
-                        eval "sudo $cm11 -y ppa:deadsnakes/ppa"
-                        eval "sudo $cm1 -y update"
                         eval "sudo $cm1 install -y python3.6"
                         eval "sudo ln -sf /usr/bin/python3.6 /usr/bin/python3"
                         eval "sudo $cm1 -y upgrade"
 	        ;;
 	esac
-
+             declare -i pipver1
+             pipv=$(pip3 --version)
+             pipver=$( echo "$pipv" | awk '{split($0,a," ");print a[2]}')
+             pipver1=$( echo "$pipver}" | awk '{split($0,a,".");print a[1]}')
+        
+          #    echo "eval $(declare -p pipver1)"
+          #    echo "the value of pipver is $pipver1"
+  
+              if [[ $pipver1 < 21 ]]
+              then
+                eval "sudo $cm1 install -y wget"
+                eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
+                eval "python3 ./get-pip.py"
+              else
+              echo "pipver is >21"
+              fi
 
               eval "sudo $cm1 update"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
@@ -121,11 +140,6 @@ then
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
-
-  
-              eval "sudo $cm1 install -y wget"
-              eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
-              eval "python3 ./get-pip.py"
 
    echo "Success"
    echo `python -V`
