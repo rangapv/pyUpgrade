@@ -78,13 +78,7 @@ then
 	piver=$(python -V 2>&1)
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
-	piver2=$(python2 -V 2>&1)
-	piver21=$( echo "${piver2}" | awk '{split($0,a," ");print a[2]}')
-	piver22=$( echo "${piver21}" | awk '{split($0,a,".");print a[1]}')
-	piver3=$(python3 -V 2>&1)
-	piver31=$( echo "${piver3}" | awk '{split($0,a," ");print a[2]}')
-	piver32=$( echo "${piver31}" | awk '{split($0,a,".");print a[1]}')
-        piver33=$( echo "${piver31}" | awk '{split($0,a,".");print a[2]}')
+        piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
 	
         case ${piver12} in
 		2)
