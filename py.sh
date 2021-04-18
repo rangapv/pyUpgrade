@@ -38,7 +38,7 @@ then
    	cm2="apt-key"
         sudo $cm11 -y ppa:deadsnakes/ppa
         sudo $cm1 -y update
-        sudo ln -s apt_pkg.cpython-36m-x86_64-linux-gnu.so apt_pkg.so
+        sudo ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-36m-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
 	count=1
 	fi
 elif [ ! -z "$d1" ]
