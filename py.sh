@@ -38,6 +38,7 @@ then
    	cm2="apt-key"
         sudo $cm11 -y ppa:deadsnakes/ppa
         sudo $cm1 -y update
+        sudo ln -s apt_pkg.cpython-36m-x86_64-linux-gnu.so apt_pkg.so
 	count=1
 	fi
 elif [ ! -z "$d1" ]
@@ -71,15 +72,23 @@ then
 else
 	echo "The distribution cannot be determined"
 fi
+pi=$(python --version)
+ret=$( echo "$?")
 if [ count > 0 ]
 then
+
+        if [ ret < 1 ]
+	then	
 	pi=$(python --version)
         #pi1="${pi,,}"
 	piver=$(python -V 2>&1)
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-	
+        else
+	piver12=0
+	fi
+
         case ${piver12} in
 		2)
 			echo "Python Version 2 upgrading to 3"
