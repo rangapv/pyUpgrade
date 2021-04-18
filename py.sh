@@ -77,7 +77,7 @@ ret=$( echo "$?")
 if [ count > 0 ]
 then
 
-        if [ ret < 1 ]
+        if [[ $ret < 1 ]]
 	then	
 	pi=$(python --version)
         #pi1="${pi,,}"
@@ -118,13 +118,17 @@ then
 	esac
              declare -i pipver1
              pipv=$(pip3 --version)
-             pipver=$( echo "$pipv" | awk '{split($0,a," ");print a[2]}')
+             pipret=$( echo "$?" )
+	     pipver1=100
+	     if [[ $pipret < 1 ]]
+	     then
+	     pipver=$( echo "$pipv" | awk '{split($0,a," ");print a[2]}')
              pipver1=$( echo "$pipver}" | awk '{split($0,a,".");print a[1]}')
-        
+             fi 
           #    echo "eval $(declare -p pipver1)"
           #    echo "the value of pipver is $pipver1"
   
-              if [[ $pipver1 < 21 ]]
+	     if (( $pipver1 < 21 || $pipret != 0 )) 
               then
                 eval "sudo $cm1 install -y wget"
                 eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
