@@ -87,8 +87,8 @@ then
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
 	sudo $cm1 install -y python3.6
-        sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
         sudo ln -sf /usr/bin/python3 /usr/bin/python
+        sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
         piver=$(python -V 2>&1)
         piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
         piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
@@ -101,15 +101,15 @@ then
                         if [[ $piver33 = "5" ]]
                         then
                          sudo $cm1 install -y python3.6
-                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
 		     	 echo "Inside 5"
                         fi
                         if [[ $piver33 = "6" ]]
                         then
                          sudo $cm1 install -y python3.7
-                         sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                         sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
 		       	 echo "Inside 6"
                         fi
 		;;
