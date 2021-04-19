@@ -92,6 +92,7 @@ then
         piver=$(python -V 2>&1)
         piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
         piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+        piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         fi
         echo "piver12 is $piver12"
         case ${piver12} in
@@ -136,8 +137,6 @@ then
               echo "pipver is >21"
               fi
 
-              eval "sudo $cm1 update"
-              eval "sudo python3 -m pip install --user --upgrade pip"
 	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
               eval "sudo pip3 install awscli"
