@@ -37,7 +37,7 @@ then
         cm11="add-apt-repository"
    	cm2="apt-key"
         sudo $cm11 -y ppa:deadsnakes/ppa
-        sudo ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-38-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
+        sudo ln -sf /usr/lib/python3/dist-packages/apt_pkg.cpython-38-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
         sudo $cm1 -y update
 	count=1
 	fi
@@ -86,7 +86,7 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
-	piver12=0
+	piver12=1
 	fi
 
         case ${piver12} in
