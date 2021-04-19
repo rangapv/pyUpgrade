@@ -134,11 +134,12 @@ then
               then
                 eval "sudo $cm1 install -y wget"
                 eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
-                eval "python3 ./get-pip.py"
+                eval "sudo python3 ./get-pip.py"
               else
               echo "pipver is >21"
               fi
-
+	      eval "sudo $cm1 update"
+              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
               eval "sudo pip3 install awscli"
