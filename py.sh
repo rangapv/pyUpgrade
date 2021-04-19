@@ -86,13 +86,10 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
-	piver12=1
+	piver12=0
 	fi
 
         case ${piver12} in
-		2)
-			echo "Python Version 2 upgrading to 3"
-		;;
 		3)
 		 	echo "Python Version 3"
                         if [[ $piver33 = "5" ]]
@@ -108,13 +105,15 @@ then
                         echo "Inside 6"
                         fi
 		;;
-		*)
-			echo "No Python Installed in this BOX"
+		0,2)
+			echo "Installing default version 3.6"
                         eval "sudo $cm1 update"
                         eval "sudo $cm1 install -y python3.6"
                         eval "sudo ln -sf /usr/bin/python3.6 /usr/bin/python3"
                         eval "sudo $cm1 -y upgrade"
 	        ;;
+	        *) 
+			echo "Doing Nothing"
 	esac
              declare -i pipver1
              pipv=$(pip3 --version)
