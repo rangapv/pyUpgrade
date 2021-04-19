@@ -88,7 +88,7 @@ then
         else
 	piver12=0
 	fi
-
+        echo "piver12 is $piver12"
         case ${piver12} in
 		3)
 		 	echo "Python Version 3"
@@ -110,7 +110,6 @@ then
                         eval "sudo $cm1 update"
                         eval "sudo $cm1 install -y python3.6"
                         eval "sudo ln -sf /usr/bin/python3.6 /usr/bin/python3"
-                        eval "sudo $cm1 -y upgrade"
 	        ;;
 	        *) 
 			echo "Doing Nothing"
@@ -138,7 +137,6 @@ then
 
               eval "sudo $cm1 update"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
-              eval "sudo $cm1 -y upgrade"
               eval "sudo python3 -m pip install --user --upgrade pip"
 	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
