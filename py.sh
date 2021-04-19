@@ -94,26 +94,28 @@ then
         piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         fi
-        echo "piver12 is $piver12"
         case ${piver12} in
 		3)
-		 	echo "Python Version 3"
                         if [[ $piver33 = "5" ]]
                         then
                          sudo $cm1 install -y python3.6
                          sudo ln -sf /usr/bin/python3 /usr/bin/python
                          sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
-		     	 echo "Inside 5"
                         fi
                         if [[ $piver33 = "6" ]]
                         then
                          sudo $cm1 install -y python3.7
                          sudo ln -sf /usr/bin/python3 /usr/bin/python
                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
-		       	 echo "Inside 6"
                         fi
 		;;
-	        *) 
+                2)
+			 echo "Upgrading Python Version 2"
+			 sudo $cm1 install -y python3.6
+                         sudo ln -sf /usr/bin/python3 /usr/bin/python
+                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                ;;
+           	*) 
 			echo "Doing Nothing"
 	esac
              declare -i pipver1
