@@ -86,8 +86,13 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
-	piver12=0
-	fi
+	sudo $cm1 install -y python3.6
+        sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+        sudo ln -sf /usr/bin/python3 /usr/bin/python
+        piver=$(python -V 2>&1)
+        piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+        piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+        fi
         echo "piver12 is $piver12"
         case ${piver12} in
 		3)
@@ -96,21 +101,17 @@ then
                         then
                          sudo $cm1 install -y python3.6
                          sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
-                        echo "Inside 5"
+                         sudo ln -sf /usr/bin/python3 /usr/bin/python
+		     	 echo "Inside 5"
                         fi
                         if [[ $piver33 = "6" ]]
                         then
                          sudo $cm1 install -y python3.7
                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
-                        echo "Inside 6"
+                         sudo ln -sf /usr/bin/python3 /usr/bin/python
+		       	 echo "Inside 6"
                         fi
 		;;
-		0,2)
-			echo "Installing default version 3.6"
-                        eval "sudo $cm1 update"
-                        eval "sudo $cm1 install -y python3.6"
-                        eval "sudo ln -sf /usr/bin/python3.6 /usr/bin/python3"
-	        ;;
 	        *) 
 			echo "Doing Nothing"
 	esac
@@ -136,7 +137,6 @@ then
               fi
 
               eval "sudo $cm1 update"
-              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
               eval "sudo python3 -m pip install --user --upgrade pip"
 	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
