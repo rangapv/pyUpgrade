@@ -146,6 +146,7 @@ then
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
+              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 
    echo "Success"
    echo `python -V`
