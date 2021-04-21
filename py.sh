@@ -138,7 +138,6 @@ then
               else
               echo "pipver is >21"
               fi
-	      eval "sudo $cm1 update"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
