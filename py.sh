@@ -14,6 +14,7 @@ if [ -z "$mac" ]
 then
   u1=$(cat /etc/*-release | grep ubuntu)
   f1=$(cat /etc/*-release | grep ID= | grep fedora)
+  r1=$(cat /etc/*-release | grep ID= | grep rhel)
   c1=$(cat /etc/*-release | grep ID= | grep centos)
   s1=$(cat /etc/*-release | grep suse)
   d1=$(cat /etc/*-release | grep ID= | grep debian)
@@ -55,13 +56,13 @@ then
         echo " it is fedora"
 	count=1
 
-elif [ ! -z "$c1" ]
+elif [[ ! -z "$c1" || ! -z "$r1" ]]
 then
 	echo "it is a centos"
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
         cm1="yum -y"
-        sudo yum install -y https://repo.ius.io/ius-release-el7.rpm
+        sudo yum -y install @development
 	count=1
 
 elif [ ! -z "$mac" ]
@@ -86,9 +87,15 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
+        if [ ! -z "$r1" ]
+        then
+        sudo $cm1 -y install python3
+        sudo ln -sf /usr/bin/python3 /usr/bin/python 
+        else 
 	sudo $cm1 install -y python3.6
         sudo ln -sf /usr/bin/python3 /usr/bin/python
         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+        fi
         piver=$(python -V 2>&1)
         piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
         piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
@@ -104,9 +111,15 @@ then
                         fi
                         if [[ $piver33 = "6" ]]
                         then
-                         sudo $cm1 install -y python3.7
-                         sudo ln -sf /usr/bin/python3 /usr/bin/python
-                         sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
+                         if [ ! -z "$r1" ]
+                         then
+                          sudo $cm1 -y install python3
+	                  sudo ln -sf  /usr/bin/python3 /usr/bin/python
+                         else
+                          sudo $cm1 install -y python3.7
+                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
+                         fi
                         fi
 		;;
                 2)
