@@ -105,16 +105,27 @@ then
 		3)
                         if [[ $piver33 = "5" ]]
                         then
-                         sudo $cm1 install -y python3.6
-                         sudo ln -sf /usr/bin/python3 /usr/bin/python
-                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         then
+                           sudo $cm1 -y install python3
+                           sudo ln -sf  /usr/bin/python3 /usr/bin/python
+                         else  
+                           sudo $cm1 install -y python3.6
+                           sudo ln -sf /usr/bin/python3 /usr/bin/python
+                           sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                         fi
                         fi
                         if [[ $piver33 = "6" ]]
                         then
-                         if [ ! -z "$r1" ]
+                         if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
-                          sudo $cm1 -y install python3
-	                  sudo ln -sf  /usr/bin/python3 /usr/bin/python
+                          sudo wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
+                          tar xzf Python-3.7.9.tgz
+                          cd Python-3.7.9
+                          sudo ./configure --enable-optimizations
+                          sudo $cm1 -y install zlib-devel
+                          sudo make altinstall
+                          sudo ln -sf /usr/local/bin/python3.7 /usr/bin/python                     
                          else
                           sudo $cm1 install -y python3.7
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -144,23 +155,28 @@ then
           #    echo "the value of pipver is $pipver1"
   
 	     if (( $pipver1 < 21 || $pipret != 0 )) 
-              then
+             then
                 eval "sudo $cm1 install -y wget"
                 eval "wget https://bootstrap.pypa.io/get-pip.py -O ./get-pip.py"
                 eval "sudo python3 ./get-pip.py"
-              else
+             else
               echo "pipver is >21"
-              fi
+             fi
+              if [ ! -z "$u1" ]
+              then
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
-	      eval "sudo $cm1 install -y python3-pip"
+	      fi
+              eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
               eval "sudo pip3 install awscli"
               eval "sudo pip3 install boto"
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
+              if [ ! -z "$u1" ]
+              then
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
-
+              fi
    echo "Success"
    echo `python -V`
    echo `pip3 -V`
