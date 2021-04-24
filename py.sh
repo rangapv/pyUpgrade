@@ -119,13 +119,64 @@ then
                         then
                          if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
+                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
                           sudo wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
                           tar xzf Python-3.7.9.tgz
                           cd Python-3.7.9
                           sudo ./configure --enable-optimizations
-                          sudo $cm1 -y install zlib-devel
                           sudo make altinstall
                           sudo ln -sf /usr/local/bin/python3.7 /usr/bin/python                     
+                         else
+                          sudo $cm1 install -y python3.7
+                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
+                         fi
+                        fi
+                        if [[ $piver33 = "7" ]]
+                        then
+                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         then
+                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+                          sudo wget https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tgz 
+                          tar xzf Python-3.8.7.tgz
+                          cd Python-3.8.7
+                          sudo ./configure --enable-optimizations
+                          sudo make altinstall
+                          sudo ln -sf /usr/local/bin/python3.8 /usr/bin/python                     
+                         else
+                          sudo $cm1 install -y python3.8
+                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                          sudo ln -sf /usr/bin/python3.8 /usr/bin/python3
+                         fi
+                        fi
+                        if [[ $piver33 = "8" ]]
+                        then
+                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         then
+                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+                          sudo wget https://www.python.org/ftp/python/3.9.4/Python-3.9.4.tgz 
+                          tar xzf Python-3.9.4.tgz
+                          cd Python-3.9.4
+                          sudo ./configure --enable-optimizations
+                          sudo make altinstall
+                          sudo ln -sf /usr/local/bin/python3.9 /usr/bin/python                     
+                         else
+                          sudo $cm1 install -y python3.7
+                          sudo ln -sf /usr/bin/python3 /usr/bin/python
+                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
+                         fi
+                        fi
+                        if [[ $piver33 = "9" ]]
+                        then
+                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         then
+                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+                          sudo wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0a6.tgz 
+                          tar xzf Python-3.10.0a6.tgz
+                          cd Python-3.10.0a6 
+                          sudo ./configure --enable-optimizations
+                          sudo make altinstall
+                          sudo ln -sf /usr/local/bin/python3.10 /usr/bin/python                     
                          else
                           sudo $cm1 install -y python3.7
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
