@@ -2,6 +2,28 @@
 set -E
 li=$(uname -s)
 
+pyupgrade() {
+pargs="$#"
+args=("$@")
+arg1=${args[$((pargs-1))]}
+sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+pyver=${args[$((pargs-pargs))]}
+pyver2=${args[$((pargs-$((pargs-1))))]}
+pyver3=${args[$((pargs-$((pargs-2))))]}
+var3="/"
+wg=$pyver$pyver2$var3$pyver3
+sudo wget "$wg" 
+tar xzf $pyver3
+se1=$( echo "${pyver3}" | awk '{split($0,a,".");print a[1]"."a[2]"."a[3]}')
+se2=$( echo "${pyver3}" | awk '{split($0,a,".");print a[1]"."a[2]}')
+se3=$( echo "${pyver2}" | awk '{split($0,a,".");print a[1]"."a[2]}')
+cd $se1 
+sudo ./configure --enable-optimizations
+sudo make altinstall
+slpy="python$se3"
+sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python
+}
+
 if [ $(echo "$li" | grep Linux) ]
 then
   mac=""
@@ -119,13 +141,7 @@ then
                         then
                          if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
-                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
-                          sudo wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
-                          tar xzf Python-3.7.9.tgz
-                          cd Python-3.7.9
-                          sudo ./configure --enable-optimizations
-                          sudo make altinstall
-                          sudo ln -sf /usr/local/bin/python3.7 /usr/bin/python                     
+                          pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
                          else
                           sudo $cm1 install -y python3.7
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -136,13 +152,7 @@ then
                         then
                          if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
-                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
-                          sudo wget https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tgz 
-                          tar xzf Python-3.8.7.tgz
-                          cd Python-3.8.7
-                          sudo ./configure --enable-optimizations
-                          sudo make altinstall
-                          sudo ln -sf /usr/local/bin/python3.8 /usr/bin/python                     
+                          pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
                          else
                           sudo $cm1 install -y python3.8
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -153,13 +163,7 @@ then
                         then
                          if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
-                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
-                          sudo wget https://www.python.org/ftp/python/3.9.4/Python-3.9.4.tgz 
-                          tar xzf Python-3.9.4.tgz
-                          cd Python-3.9.4
-                          sudo ./configure --enable-optimizations
-                          sudo make altinstall
-                          sudo ln -sf /usr/local/bin/python3.9 /usr/bin/python                     
+                          pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
                          else
                           sudo $cm1 install -y python3.7
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -170,13 +174,7 @@ then
                         then
                          if [[ ! -z "$r1" || ! -z "$c1" ]]
                          then
-                          sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
-                          sudo wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0a6.tgz 
-                          tar xzf Python-3.10.0a6.tgz
-                          cd Python-3.10.0a6 
-                          sudo ./configure --enable-optimizations
-                          sudo make altinstall
-                          sudo ln -sf /usr/local/bin/python3.10 /usr/bin/python                     
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
                          else
                           sudo $cm1 install -y python3.7
                           sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -232,3 +230,4 @@ then
    echo `python -V`
    echo `pip3 -V`
 fi
+
