@@ -6,7 +6,6 @@ pyupgrade() {
 pargs="$#"
 args=("$@")
 arg1=${args[$((pargs-1))]}
-sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
 pyver=${args[$((pargs-pargs))]}
 pyver2=${args[$((pargs-$((pargs-1))))]}
 pyver3=${args[$((pargs-$((pargs-2))))]}
@@ -24,6 +23,14 @@ slpy="python$se3"
 sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python
 }
 
+
+susepyup(){
+sudo zypper -y install git
+
+} 
+
+
+
 if [ $(echo "$li" | grep Linux) ]
 then
   mac=""
@@ -38,7 +45,7 @@ then
   f1=$(cat /etc/*-release | grep ID= | grep fedora)
   r1=$(cat /etc/*-release | grep ID= | grep rhel)
   c1=$(cat /etc/*-release | grep ID= | grep centos)
-  s1=$(cat /etc/*-release | grep suse)
+  s1=$(cat /etc/*-release | grep ID= | grep sles)
   d1=$(cat /etc/*-release | grep ID= | grep debian)
 else 
   echo "Mac is not empty"
@@ -78,12 +85,21 @@ then
         echo " it is fedora"
 	count=1
 
+elif [ ! -z "$s1" ]
+then
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+        ki="${ji,,}"
+        echo " it is SUSE"
+        sudo zypper install gcc make openssl-devel libffi-devel zlib-devel wget
+	count=1
+
 elif [[ ! -z "$c1" || ! -z "$r1" ]]
 then
 	echo "it is a centos"
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
         cm1="yum -y"
+        sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo yum -y install @development
 	count=1
 
@@ -109,19 +125,25 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
-        if [ ! -z "$r1" ]
-        then
-        sudo $cm1 -y install python3
-        sudo ln -sf /usr/bin/python3 /usr/bin/python 
-        else 
-	sudo $cm1 install -y python3.6
-        sudo ln -sf /usr/bin/python3 /usr/bin/python
-        sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
-        fi
-        piver=$(python -V 2>&1)
-        piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
-        piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
-        piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+          if [ ! -z "$r1" ]
+          then
+          sudo $cm1 -y install python3
+          sudo ln -sf /usr/bin/python3 /usr/bin/python 
+          elif [ ! -z "$u1" ]
+          then 
+	  sudo $cm1 install -y python3.6
+          sudo ln -sf /usr/bin/python3 /usr/bin/python
+          sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+          elif [ ! -z "$s1" ]
+          then
+          echo "No python is suse" 
+          else
+          echo "THis should not occur"
+          fi
+         piver=$(python -V 2>&1)
+         piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+         piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         fi
         case ${piver12} in
 		3)
@@ -139,7 +161,7 @@ then
                         fi
                         if [[ $piver33 = "6" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
                          then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
                          else
@@ -150,7 +172,7 @@ then
                         fi
                         if [[ $piver33 = "7" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
                          then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
                          else
@@ -161,7 +183,7 @@ then
                         fi
                         if [[ $piver33 = "8" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
                          then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
                          else
@@ -172,7 +194,7 @@ then
                         fi
                         if [[ $piver33 = "9" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" ]]
+                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
                          then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
                          else
