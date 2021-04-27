@@ -147,23 +147,23 @@ then
         fi
         case ${piver12} in
 		3)
-                        if [[ $piver33 = "5" ]]
+                        if [ $piver33 = "5" ]
                         then
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
 			fi
-                        if [[ $piver33 = "6" ]]
+                        if [ $piver33 = "6" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
                         fi
-                        if [[ $piver33 = "7" ]]
+                        if [ $piver33 = "7" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
                         fi
-                        if [[ $piver33 = "8" ]]
+                        if [ $piver33 = "8" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
                         fi
-                        if [[ $piver33 = "9" ]]
+                        if [ $piver33 = "9" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
                         fi
