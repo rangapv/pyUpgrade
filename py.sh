@@ -161,47 +161,19 @@ then
                         fi
                         if [[ $piver33 = "6" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
-                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
-                         else
-                          sudo $cm1 install -y python3.7
-                          sudo ln -sf /usr/bin/python3 /usr/bin/python
-                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
-                         fi
                         fi
                         if [[ $piver33 = "7" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
-                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
-                         else
-                          sudo $cm1 install -y python3.8
-                          sudo ln -sf /usr/bin/python3 /usr/bin/python
-                          sudo ln -sf /usr/bin/python3.8 /usr/bin/python3
-                         fi
                         fi
                         if [[ $piver33 = "8" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
-                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
-                         else
-                          sudo $cm1 install -y python3.7
-                          sudo ln -sf /usr/bin/python3 /usr/bin/python
-                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
-                         fi
                         fi
                         if [[ $piver33 = "9" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" || ! -z "$s1" ]]
-                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
-                         else
-                          sudo $cm1 install -y python3.7
-                          sudo ln -sf /usr/bin/python3 /usr/bin/python
-                          sudo ln -sf /usr/bin/python3.7 /usr/bin/python3
-                         fi
                         fi
 		;;
                 2)
@@ -233,7 +205,9 @@ then
              else
               echo "pipver is >21"
              fi
-              if [ ! -z "$u1" ]
+              piver=$(python -V 2>&1)
+              piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+              if [[ ! -z "$u1" && $piver34 = "6" ]]
               then
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 	      fi
@@ -244,7 +218,7 @@ then
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
-              if [ ! -z "$u1" ]
+              if [[ ! -z "$u1" && $piver34 = "6" ]]
               then
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
               fi
