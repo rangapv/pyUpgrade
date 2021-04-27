@@ -41,7 +41,7 @@ fi
 
 if [ -z "$mac" ]
 then
-  u1=$(cat /etc/*-release | grep ubuntu)
+  u1=$(cat /etc/*-release | grep ID= | grep ubuntu)
   f1=$(cat /etc/*-release | grep ID= | grep fedora)
   r1=$(cat /etc/*-release | grep ID= | grep rhel)
   c1=$(cat /etc/*-release | grep ID= | grep centos)
@@ -149,16 +149,8 @@ then
 		3)
                         if [[ $piver33 = "5" ]]
                         then
-                         if [[ ! -z "$r1" || ! -z "$c1" ]]
-                         then
-                           sudo $cm1 -y install python3
-                           sudo ln -sf  /usr/bin/python3 /usr/bin/python
-                         else  
-                           sudo $cm1 install -y python3.6
-                           sudo ln -sf /usr/bin/python3 /usr/bin/python
-                           sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
-                         fi
-                        fi
+                         pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
+			fi
                         if [[ $piver33 = "6" ]]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
