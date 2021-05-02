@@ -98,7 +98,7 @@ then
 	echo "it is a centos"
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
-        cm1="yum -y"
+        cm1="yum"
         sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo yum -y install @development
 	count=1
@@ -170,9 +170,9 @@ then
 		;;
                 2)
 			 echo "Upgrading Python Version 2"
-			 sudo $cm1 install -y python3.6
+                         pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
                          sudo ln -sf /usr/bin/python3 /usr/bin/python
-                         sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+                         sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3
                 ;;
            	*) 
 			echo "Doing Nothing"
