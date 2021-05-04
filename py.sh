@@ -173,8 +173,6 @@ then
                 2)
 			 echo "Upgrading Python Version 2"
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-                         sudo ln -sf /usr/bin/python3 /usr/bin/python
-                         sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3
                 ;;
            	*) 
 			echo "Doing Nothing"
