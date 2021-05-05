@@ -129,13 +129,13 @@ then
         else
           if [ ! -z "$r1" ]
           then
-          sudo $cm1 -y install python3
-          sudo ln -sf /usr/bin/python3 /usr/bin/python 
+             pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
           elif [ ! -z "$u1" ]
           then 
-	  sudo $cm1 install -y python3.6
-          sudo ln -sf /usr/bin/python3 /usr/bin/python
-          sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
+             pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
+          elif [ ! -z "$d1" ]
+	  then
+             pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
           elif [ ! -z "$s1" ]
           then
           echo "No python is suse" 
@@ -199,8 +199,9 @@ then
              fi
               piver=$(python -V 2>&1)
               piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-              if [[ ! -z "$u1" && $piver34 = "6" ]]
+	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) ]]
               then
+              eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 	      fi
               eval "sudo $cm1 install -y python3-pip"
@@ -210,8 +211,9 @@ then
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
-              if [[ ! -z "$u1" && $piver34 = "6" ]]
+	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) ]]
               then
+              eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
               fi
    echo "Success"
