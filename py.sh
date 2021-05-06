@@ -44,6 +44,7 @@ then
   u1=$(cat /etc/*-release | grep ID= | grep ubuntu)
   f1=$(cat /etc/*-release | grep ID= | grep fedora)
   r1=$(cat /etc/*-release | grep ID= | grep rhel)
+  a1=$(cat /etc/*-release | grep ID= | grep amzn)
   c1=$(cat /etc/*-release | grep ID= | grep centos)
   s1=$(cat /etc/*-release | grep ID= | grep sles)
   d1=$(cat /etc/*-release | grep ID= | grep debian)
@@ -60,7 +61,7 @@ then
 	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
 	ki="${ji,,}"
 
-	if [ "$ki" == "ubuntu" ]
+	if [ "$ki" = "ubuntu" ]
 	then
    	echo "IT IS UBUNTU"
    	cm1="apt-get"
@@ -95,14 +96,25 @@ then
         sudo zypper install gcc make openssl-devel libffi-devel zlib-devel wget
 	count=1
 
-elif [[ ! -z "$c1" || ! -z "$r1" ]]
+elif [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 then
-	echo "it is a centos"
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
+	if [ $ki = "amzn" ]
+	then
+	   echo "It is amazon AMI"
+	elif [ $ki = "rhel" ]
+	then 
+	   echo "It is RHEL"
+	elif [ $ki = "centos" ]
+	then
+	   echo "It is centos"
+	else
+	   echo "OS flavor cant be determined"
+	fi
         cm1="yum"
-        sudo yum -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
-        sudo yum -y install @development
+        sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+        sudo $cm1 -y install @development
 	count=1
 
 elif [ ! -z "$mac" ]
