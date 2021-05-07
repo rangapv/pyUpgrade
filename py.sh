@@ -113,8 +113,16 @@ then
 	   echo "OS flavor cant be determined"
 	fi
         cm1="yum"
-        sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+        if [ true ]
+	then
+        link=$(readlink -f `which /usr/bin/python`)
+	sudo ln -sf /usr/bin/python2 /usr/bin/python
+	sudo $cm1 -y update
+        sudo $cm1 -y install wget
+	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo $cm1 -y install @development
+	sudo ln -sf $link /usr/bin/python 
+	fi
 	count=1
 
 elif [ ! -z "$mac" ]
@@ -216,13 +224,27 @@ then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
 	      fi
-              eval "sudo $cm1 install -y python3-pip"
+	      if [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
+	      then
+              link=$(readlink -f `which /usr/bin/python`)
+	      sudo ln -sf /usr/bin/python2 /usr/bin/python
+	      eval "sudo $cm1 install -y python3-pip"
               eval "sudo pip3 install --upgrade pip"
               eval "sudo pip3 install awscli"
               eval "sudo pip3 install boto"
               eval "sudo pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
+	      sudo ln -sf $link /usr/bin/python 
+	      else     
+	      eval "sudo $cm1 install -y python3-pip"
+              eval "sudo pip3 install --upgrade pip"
+              eval "sudo pip3 install awscli"
+              eval "sudo pip3 install boto"
+              eval "sudo pip3 install boto3"
+              eval "sudo $cm1 install -y python-boto"
+              eval "sudo $cm1 install -y python-boto3"
+	      fi
 	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) ]]
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
