@@ -147,20 +147,13 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
         else
-          if [[ ! -z "$r1" || ! -z "$u1" || ! -z "$d1" ]]
-          then
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-          elif [ ! -z "$s1" ]
-          then
-          echo "No python is suse" 
-          else
-          echo "THis should not occur"
-          fi
+        fi
          piver=$(python -V 2>&1)
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
          piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
          piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-        fi
+        
         case ${piver12} in
 		3)
                         if [ $piver33 = "5" ]
@@ -248,4 +241,3 @@ then
    echo `python -V`
    echo `pip3 -V`
 fi
-
