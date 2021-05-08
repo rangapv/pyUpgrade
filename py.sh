@@ -205,8 +205,11 @@ then
               echo "pipver is >21"
              fi
               piver=$(python -V 2>&1)
-              piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) ]]
+              piverec=$(echo "$?")
+	      piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+	      piverwh=$(which python)
+	      piverwhec=$(echo "$?")
+	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) && ( $piverwhec < 1) && ($piverec < 1) ]]
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
@@ -232,7 +235,7 @@ then
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      fi
-	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) ]]
+	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) && ( $piverwhec < 1) && ($piverec < 1) ]]
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
