@@ -77,7 +77,7 @@ then
 	cm1="apt-get"
 	cm2="apt-key"
 	echo "IT IS DEbian"
-	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
+	sudo $cm1 -y install gcc make wget
         count=1
 
 elif [ ! -z "$f1" ]
