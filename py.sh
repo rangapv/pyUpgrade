@@ -40,7 +40,7 @@ pipupgrade () {
       elif [ $piver12 = "3" ]
       then
          sudo $pargs1 install -y python3-pip
-	 sudo pip install --upgrade pip
+	 sudo pip3 install --upgrade pip
       fi
 }
 
