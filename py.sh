@@ -41,6 +41,8 @@ pipupgrade () {
       then
          sudo $pargs1 install -y python3-pip
 	 sudo pip3 install --upgrade pip
+      else
+	 echo "This should not happen"
       fi
 }
 
