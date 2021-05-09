@@ -24,6 +24,29 @@ sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python
 }
 
 
+pipupgrade () {
+      pipargs="$#"
+      pargs=("$@")
+      pargs1=${pargs[$((pipargs-pipargs))]}
+      piver=$(python -V 2>&1)
+      piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+      piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+      piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+
+      if [ $piver12 = "2" ]
+      then
+	 sudo $pargs1 install -y python-pip
+         sudo pip install --upgrade pip
+      elif [ $piver12 = "3" ]
+      then
+         sudo $pargs1 install -y python3-pip
+	 sudo pip install --upgrade pip
+      fi
+}
+
+
+
+
 susepyup(){
 sudo zypper -y install git
 
@@ -147,8 +170,10 @@ then
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+        pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
+	     pipupgrade $cm1
         fi
          piver=$(python -V 2>&1)
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
