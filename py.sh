@@ -186,37 +186,32 @@ then
                         if [ $piver33 = "5" ]
                         then
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-	                 pipupgrade $cm1
 			fi
                         if [ $piver33 = "6" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
-	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "7" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
-	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "8" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
-	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "9" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
-	                  pipupgrade $cm1
                         fi
 		;;
                 2)
 			 echo "Upgrading Python Version 2"
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-	                 pipupgrade $cm1
                 ;;
            	*) 
 			echo "Doing Nothing"
 	esac
+	     pipupgrade $cm1
              declare -i pipver1
               
              piver=$(python -V 2>&1)
