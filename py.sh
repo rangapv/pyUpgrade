@@ -48,7 +48,6 @@ pipupgrade () {
 
 
 
-
 susepyup(){
 sudo zypper -y install git
 
@@ -187,33 +186,44 @@ then
                         if [ $piver33 = "5" ]
                         then
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
+	                 pipupgrade $cm1
 			fi
                         if [ $piver33 = "6" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
+	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "7" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
+	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "8" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
+	                  pipupgrade $cm1
                         fi
                         if [ $piver33 = "9" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
+	                  pipupgrade $cm1
                         fi
 		;;
                 2)
 			 echo "Upgrading Python Version 2"
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
+	                 pipupgrade $cm1
                 ;;
            	*) 
 			echo "Doing Nothing"
 	esac
              declare -i pipver1
-             pipv=$(pip3 --version)
+              
+             piver=$(python -V 2>&1)
+             piver11=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+	     if [ $piver11="3" ]
+             then
+	     pipv=$(pip3 --version)
              pipret=$( echo "$?" )
 	     pipver1=100
 	     if [[ $pipret < 1 ]]
@@ -268,7 +278,11 @@ then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
               fi
-   echo "Success"
-   echo `python -V`
-   echo `pip3 -V`
+              echo "Success"
+              echo `python -V`
+              echo `pip3 -V`
+              else
+		   echo `python -V`
+		   echo `pip -V`
+              fi
 fi
