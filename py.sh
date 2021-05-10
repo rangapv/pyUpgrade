@@ -206,6 +206,7 @@ then
 		;;
                 2)
 			 echo "Upgrading Python Version 2"
+	                 pipupgrade $cm1
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
                 ;;
            	*) 
