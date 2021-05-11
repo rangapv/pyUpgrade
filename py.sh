@@ -206,7 +206,6 @@ then
 		;;
                 2)
 			 echo "Upgrading Python Version 2"
-	                 pipupgrade $cm1
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
                 ;;
            	*) 
@@ -247,6 +246,8 @@ then
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
+              echo `python -V`
+              echo `pip3 -V`
 	      fi
 	      if [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 	      then
@@ -269,14 +270,7 @@ then
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      fi
-	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) && ( $piverwhec < 1) && ($piverec < 1) ]]
-              then
-              eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
-              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
-              fi
               echo "Success"
-              echo `python -V`
-              echo `pip3 -V`
               else
 		   echo `python -V`
 		   echo `pip -V`
