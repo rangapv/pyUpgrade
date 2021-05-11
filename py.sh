@@ -171,10 +171,10 @@ then
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-        pipupgrade $cm1
+ #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-	     pipupgrade $cm1
+ #	     pipupgrade $cm1
         fi
          piver=$(python -V 2>&1)
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
@@ -211,7 +211,7 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-	     pipupgrade $cm1
+ 	     pipupgrade $cm1
              declare -i pipver1
               
              piver=$(python -V 2>&1)
@@ -246,18 +246,16 @@ then
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
               eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
-              echo `python -V`
-              echo `pip3 -V`
 	      fi
 	      if [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 	      then
               link=$(readlink -f `which /usr/bin/python`)
 	      sudo ln -sf /usr/bin/python2 /usr/bin/python
 	      eval "sudo $cm1 install -y python3-pip"
-              eval "sudo pip3 install --upgrade pip"
-              eval "sudo pip3 install awscli"
-              eval "sudo pip3 install boto"
-              eval "sudo pip3 install boto3"
+              eval "sudo pip install --upgrade pip"
+              eval "sudo pip install awscli"
+              eval "sudo pip install boto"
+              eval "sudo pip install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      sudo ln -sf $link /usr/bin/python 
@@ -271,6 +269,9 @@ then
               eval "sudo $cm1 install -y python-boto3"
 	      fi
               echo "Success"
+	      
+	      echo `python -V`
+              echo `pip3 -V`
               else
 		   echo `python -V`
 		   echo `pip -V`
