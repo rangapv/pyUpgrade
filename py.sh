@@ -102,7 +102,17 @@ then
 	cm2="apt-key"
 	echo "IT IS DEbian"
 	sudo $cm1 -y install gcc make wget
-        count=1
+        sudo wget http://www.zlib.net/zlib-1.2.11.tar.gz 
+        tar -xzf ./zlib-1.2.11.tar.gz
+        cd zlib-1.2.11
+        sudo make distclean
+        sudo ./configure
+        sudo make
+        sudo make install
+        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc
+	echo "export CPPFLAGS=${CPPFLAGS} -I/usr/local/include" >> ~/.bashrc
+	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
+	count=1
 
 elif [ ! -z "$f1" ]
 then
@@ -216,11 +226,29 @@ then
               
              piver=$(python -V 2>&1)
              piver11=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
-	     if [ $piver11="3" ]
+             piver12=$( echo "${piver11}" | awk '{split($0,a,".");print a[1]}')
+             piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+	     if [ $piver33="6" ]
              then
-	     pipv=$(pip3 --version)
+	     pipv=$(pip3.6 --version)
              pipret=$( echo "$?" )
 	     pipver1=100
+             elif [ $piver33="7" ]
+	     then 
+	     pipv=$(pip3.7 --version)
+             pipret=$( echo "$?" )
+	     pipver1=100
+             elif [ $piver33="8" ]
+             then
+	     pipv=$(pip3.8 --version)
+             pipret=$( echo "$?" )
+	     pipver1=100
+             elif [ $piver33="9" ]
+	     then
+	     pipv=$(pip3.9 --version)
+             pipret=$( echo "$?" )
+	     pipver1=100
+             fi
 	     if [[ $pipret < 1 ]]
 	     then
 	     pipver=$( echo "$pipv" | awk '{split($0,a," ");print a[2]}')
@@ -261,19 +289,18 @@ then
 	      sudo ln -sf $link /usr/bin/python 
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
-              eval "sudo pip3 install --upgrade pip"
-              eval "sudo pip3 install awscli"
-              eval "sudo pip3 install boto"
-              eval "sudo pip3 install boto3"
+              eval "sudo pip3.${piver33} install --upgrade pip"
+              eval "sudo pip3.${piver33} install awscli"
+              eval "sudo pip3.${piver33} install boto"
+              eval "sudo pip3.${piver33} install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      fi
               echo "Success"
-	      
+
 	      echo `python -V`
-              echo `pip3 -V`
-              else
-		   echo `python -V`
-		   echo `pip -V`
-              fi
+	      nw="pip3"
+	      ne="."
+              newpip="${nw}${ne}${piver33}"
+ 	      echo `${newpip} -V`
 fi
