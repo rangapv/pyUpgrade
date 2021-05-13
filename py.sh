@@ -228,31 +228,14 @@ then
              piver11=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
              piver12=$( echo "${piver11}" | awk '{split($0,a,".");print a[1]}')
              piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-	     if [ $piver33="6" ]
-             then
-	     pipv=$(pip3.6 --version)
+             pipadd="pip3.${piver33}"
+	     pipv=$( echo "$pipadd --version")
              pipret=$( echo "$?" )
 	     pipver1=100
-             elif [ $piver33="7" ]
-	     then 
-	     pipv=$(pip3.7 --version)
-             pipret=$( echo "$?" )
-	     pipver1=100
-             elif [ $piver33="8" ]
-             then
-	     pipv=$(pip3.8 --version)
-             pipret=$( echo "$?" )
-	     pipver1=100
-             elif [ $piver33="9" ]
-	     then
-	     pipv=$(pip3.9 --version)
-             pipret=$( echo "$?" )
-	     pipver1=100
-             fi
 	     if [[ $pipret < 1 ]]
-	     then
+             then
 	     pipver=$( echo "$pipv" | awk '{split($0,a," ");print a[2]}')
-             pipver1=$( echo "$pipver}" | awk '{split($0,a,".");print a[1]}')
+             pipver1=$( echo "$pipver" | awk '{split($0,a,".");print a[1]}')
              fi 
           #    echo "eval $(declare -p pipver1)"
           #    echo "the value of pipver is $pipver1"
