@@ -53,7 +53,25 @@ sudo zypper -y install git
 
 } 
 
+zlibadd() {
+	sudo wget http://www.zlib.net/zlib-1.2.11.tar.gz 
+        tar -xzf ./zlib-1.2.11.tar.gz
+        cd zlib-1.2.11
+        sudo make distclean
+        sudo ./configure
+        sudo make
+        sudo make install
+        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc
+	echo "export CPPFLAGS=${CPPFLAGS} -I/usr/local/include" >> ~/.bashrc
+	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
+}
 
+
+lbrelease() {
+file1="/usr/bin/lsb_release"
+line1="#!/usr/bin/python3.7"
+sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.6/' $file1 
+}
 
 if [ $(echo "$li" | grep Linux) ]
 then
@@ -81,6 +99,11 @@ count=0
 if [ ! -z "$u1" ]
 then 
 	mi=$(lsb_release -cs)
+	lsb=$(echo "$?")
+	if [[ ( $lsb > 0 ) ]]
+        then
+		lbrelease
+	fi
 	mi2="${mi,,}"
 	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
 	ki="${ji,,}"
@@ -94,25 +117,30 @@ then
         sudo $cm11 -y ppa:deadsnakes/ppa
         sudo ln -sf /usr/lib/python3/dist-packages/apt_pkg.cpython-38-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
         sudo $cm1 -y update
+	zlibadd
 	count=1
 	fi
 elif [ ! -z "$d1" ]
 then
+	mi=$(lsb_release -cs)
+	lsb=$(echo "$?")
+	if [[ ( $lsb > 0 ) ]]
+        then
+		lbrelease
+	fi
+	mi2="${mi,,}"
+	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
+	ki="${ji,,}"
+
+	if [ "$ki" = "debian" ]
+	then
+	echo "IT IS Debian"
 	cm1="apt-get"
 	cm2="apt-key"
-	echo "IT IS DEbian"
 	sudo $cm1 -y install gcc make wget
-        sudo wget http://www.zlib.net/zlib-1.2.11.tar.gz 
-        tar -xzf ./zlib-1.2.11.tar.gz
-        cd zlib-1.2.11
-        sudo make distclean
-        sudo ./configure
-        sudo make
-        sudo make install
-        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc
-	echo "export CPPFLAGS=${CPPFLAGS} -I/usr/local/include" >> ~/.bashrc
-	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
+        zlibadd
 	count=1
+        fi
 
 elif [ ! -z "$f1" ]
 then
