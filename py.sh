@@ -116,7 +116,8 @@ then
    	cm2="apt-key"
         sudo $cm11 -y ppa:deadsnakes/ppa
         sudo ln -sf /usr/lib/python3/dist-packages/apt_pkg.cpython-38-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
-        sudo $cm1 -y update
+        sudo $cm1 -y install gcc make wget
+	sudo $cm1 -y update
 	zlibadd
 	count=1
 	fi
