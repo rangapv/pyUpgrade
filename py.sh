@@ -90,6 +90,7 @@ then
   c1=$(cat /etc/*-release | grep ID= | grep centos)
   s1=$(cat /etc/*-release | grep ID= | grep sles)
   d1=$(cat /etc/*-release | grep ID= | grep debian)
+  fc1=$(cat /etc/*-release | grep ID= | grep flatcar)
 else 
   echo "Mac is not empty"
 fi
@@ -160,6 +161,16 @@ then
         sudo zypper install gcc make openssl-devel libffi-devel zlib-devel wget
 	count=1
 
+elif [ ! -z "$fc1" ]
+then
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+        ki="${ji,,}"
+        if [ $ki = "flatcar" ]
+        then
+          echo "It is Flat Car Linux"
+        fi
+	count=0
+
 elif [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 then
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
@@ -199,7 +210,7 @@ else
 fi
 pi=$(python --version)
 ret=$( echo "$?")
-if [ count > 0 ]
+if [[ $count > 0 ]] 
 then
 
         if [[ $ret < 1 ]]
