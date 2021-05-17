@@ -312,10 +312,10 @@ then
 	      sudo ln -sf $link /usr/bin/python 
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
-              eval "sudo pip3.${piver33} install --upgrade pip"
-              eval "sudo pip3.${piver33} install awscli"
-              eval "sudo pip3.${piver33} install boto"
-              eval "sudo pip3.${piver33} install boto3"
+              eval "pip3.${piver33} install --upgrade pip"
+              eval "pip3.${piver33} install awscli"
+              eval "pip3.${piver33} install boto"
+              eval "pip3.${piver33} install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      fi
