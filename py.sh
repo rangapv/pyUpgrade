@@ -303,10 +303,10 @@ then
               link=$(readlink -f `which /usr/bin/python`)
 	      sudo ln -sf /usr/bin/python2 /usr/bin/python
 	      eval "sudo $cm1 install -y python3-pip"
-              eval "sudo pip install --upgrade pip"
-              eval "sudo pip install awscli"
-              eval "sudo pip install boto"
-              eval "sudo pip install boto3"
+              eval "pip install --upgrade pip"
+              eval "pip install awscli"
+              eval "pip install boto"
+              eval "pip install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      sudo ln -sf $link /usr/bin/python 
