@@ -148,11 +148,13 @@ elif [ ! -z "$f1" ]
 then
 	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
         ki="${ji,,}"
+        if [ $ki = "fedora" ]
+        then
         echo " it is fedora"
         cm1="dnf"
         sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
 	count=1
-
+        fi
 elif [ ! -z "$s1" ]
 then
 	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
