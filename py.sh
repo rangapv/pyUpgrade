@@ -159,10 +159,13 @@ elif [ ! -z "$s1" ]
 then
 	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
         ki="${ji,,}"
+        echo "Inside s1 $s1, $ki"
+        if [ $ki = \"sles\" ]
+        then
         echo " it is SUSE"
         sudo zypper install gcc make openssl-devel libffi-devel zlib-devel wget
 	count=1
-
+        fi
 elif [ ! -z "$fc1" ]
 then
 	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
