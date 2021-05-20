@@ -146,7 +146,7 @@ then
 
 elif [ ! -z "$f1" ]
 then
-	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
         if [ $ki = "fedora" ]
         then
@@ -157,9 +157,9 @@ then
         fi
 elif [ ! -z "$s1" ]
 then
-	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
-        if [ $ki = \"sles\" ]
+        if [ $ki = "sles" ]
         then
         echo " it is SUSE"
         sudo zypper install -y gcc make openssl-devel libffi-devel zlib-devel wget
@@ -167,7 +167,7 @@ then
         fi
 elif [ ! -z "$fc1" ]
 then
-	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"=");print a[2]}')
+	ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
         if [ $ki = "flatcar" ]
         then
@@ -179,6 +179,7 @@ elif [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 then
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
+	echo "the ki is $ki,$ji"
 	if [ $ki = "amzn" ]
 	then
 	   echo "It is amazon AMI"
@@ -201,8 +202,8 @@ then
 	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo $cm1 -y install @development
 	sudo ln -sf $link /usr/bin/python 
-	fi
 	count=1
+	fi
 
 elif [ ! -z "$mac" ]
 then
