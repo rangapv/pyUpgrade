@@ -179,21 +179,23 @@ elif [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 then
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
-	echo "the ki is $ki,$ji"
 	if [ $ki = "amzn" ]
 	then
 	   echo "It is amazon AMI"
+	   count=1
 	elif [ $ki = "rhel" ]
 	then 
 	   echo "It is RHEL"
+	   count=1
 	elif [ $ki = "centos" ]
 	then
 	   echo "It is centos"
+           count=1
 	else
 	   echo "OS flavor cant be determined"
 	fi
         cm1="yum"
-        if [ true ]
+	if  [[ $count = 1 ]] 
 	then
         link=$(readlink -f `which /usr/bin/python`)
 	sudo ln -sf /usr/bin/python2 /usr/bin/python
@@ -202,7 +204,6 @@ then
 	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo $cm1 -y install @development
 	sudo ln -sf $link /usr/bin/python 
-	count=1
 	fi
 
 elif [ ! -z "$mac" ]
