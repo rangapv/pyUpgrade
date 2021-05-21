@@ -61,7 +61,7 @@ zlibadd() {
         sudo ./configure
         sudo make
         sudo make install
-        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc
+        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc  
 	echo "export CPPFLAGS=${CPPFLAGS} -I/usr/local/include" >> ~/.bashrc
 	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
 }
@@ -69,8 +69,14 @@ zlibadd() {
 
 lbrelease() {
 file1="/usr/bin/lsb_release"
-line1="#!/usr/bin/python3.7"
-sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.6/' $file1 
+piver=$(python -V 2>&1)
+piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+
+line1="#!/usr/bin/python3.${piver33}"
+echo "line1 is $line1"
+sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
 }
 
 if [ $(echo "$li" | grep Linux) ]
@@ -131,9 +137,8 @@ then
 		lbrelease
 	fi
 	mi2="${mi,,}"
-	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
+	ji=$(cat /etc/*-release | grep ^ID= | grep -v "\"" | awk '{split($0,a,"=");print a[2]}')
 	ki="${ji,,}"
-
 	if [ "$ki" = "debian" ]
 	then
 	echo "IT IS Debian"
