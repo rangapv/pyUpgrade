@@ -66,7 +66,6 @@ zlibadd() {
 	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
 }
 
-
 lbrelease() {
 file1="/usr/bin/lsb_release"
 piver=$(python -V 2>&1)
@@ -77,6 +76,21 @@ piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
 line1="#!/usr/bin/python3.${piver33}"
 echo "line1 is $line1"
 sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
+}
+
+piprelease() {
+file1="$HOME/ft"
+file2=$( echo "which pip")
+
+piver=$(python -V 2>&1)
+piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
+piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
+piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+line1="#!/usr/bin/python${piver112}"
+
+sudo sed -i "1s|^.*|${line1}|" $file2 
+#sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
 }
 
 if [ $(echo "$li" | grep Linux) ]
@@ -146,7 +160,8 @@ then
 	cm2="apt-key"
 	sudo $cm1 -y install gcc make wget
         zlibadd
-	count=1
+#        piprelease
+        count=1
         fi
 
 elif [ ! -z "$f1" ]
@@ -333,6 +348,12 @@ then
               echo "Success"
 
 	      echo `python -V`
+	      pipver=$( echo "pip -V")
+	      pipech=$( echo "$?" )
+	      if [ $pipech > 0 ]
+	      then
+		   piprelease
+	      fi
 	      nw="pip3"
 	      ne="."
               newpip="${nw}${ne}${piver33}"
