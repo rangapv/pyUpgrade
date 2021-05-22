@@ -79,8 +79,7 @@ sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
 }
 
 piprelease() {
-file1="$HOME/ft"
-file2=$( echo "which pip")
+file2=$( echo `which pip`)
 
 piver=$(python -V 2>&1)
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
@@ -160,7 +159,6 @@ then
 	cm2="apt-key"
 	sudo $cm1 -y install gcc make wget
         zlibadd
-#        piprelease
         count=1
         fi
 
