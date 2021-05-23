@@ -78,22 +78,22 @@ line1="#!/usr/local/bin/python${pyvert}"
 sudo sed -i "1s|^.*|${line1}|" $file1 
 
 sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/bin/python${pyvert}/site-packages/lsb_release.py
-
 }
 
 piprelease() {
-file2=$( echo `which pip`)
 pargs="$#"
 args=("$@")
 #args2=${args[$((pargs-1))]}
 args1=${args[$((pargs-pargs))]}
+newpip="pip${args1}"
+file2=$( echo `which ${newpip}`)
 
 piver=$(python -V 2>&1)
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
 piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-line1="#!/usr/bin/python${piver112}"
+line1="#!/usr/local/bin/python${piver112}"
 
 sudo sed -i "1s|^.*|${line1}|" $file2 
 #sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
@@ -292,6 +292,12 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
+	mi=$(lsb_release -a)
+	lsb=$(echo "$?")
+	if [[ ( $lsb > 0 ) ]]
+        then
+		lbrelease
+	fi
  	     pipupgrade $cm1
              declare -i pipver1
               
@@ -357,10 +363,11 @@ then
 	      pipech=$( echo "$?" )
 	      if [ $pipech > 0 ]
 	      then
-		   piprelease
+		   piprelease 3
 	      fi
 	      nw="pip3"
 	      ne="."
               newpip="${nw}${ne}${piver33}"
+	      piprelease "${piver12}${ne}${piver33}"
  	      echo `${newpip} -V`
 fi
