@@ -37,10 +37,12 @@ pipupgrade () {
       then
 	 sudo $pargs1 install -y python-pip
          sudo pip install --upgrade pip
+	 piprelease
       elif [ $piver12 = "3" ]
       then
          sudo $pargs1 install -y python3-pip
 	 sudo pip3 install --upgrade pip
+	 piprelease 3
       else
 	 echo "This should not happen"
       fi
@@ -87,13 +89,18 @@ args=("$@")
 args1=${args[$((pargs-pargs))]}
 newpip="pip${args1}"
 file2=$( echo `which ${newpip}`)
-
 piver=$(python -V 2>&1)
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
 piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+if [[ $pargs -eq 0 ]]
+then
+piver112="2"
+line1="#!/usr/local/bin/python3.6"
+else
 line1="#!/usr/local/bin/python${piver112}"
+fi
 
 sudo sed -i "1s|^.*|${line1}|" $file2 
 #sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
@@ -363,7 +370,7 @@ then
 	      pipech=$( echo "$?" )
 	      if [ $pipech > 0 ]
 	      then
-		   piprelease 3
+		   piprelease
 	      fi
 	      nw="pip3"
 	      ne="."
