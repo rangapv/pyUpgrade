@@ -79,7 +79,7 @@ pyvert=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a
 line1="#!/usr/local/bin/python${pyvert}"
 sudo sed -i "1s|^.*|${line1}|" $file1 
 
-sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/bin/python${pyvert}/site-packages/lsb_release.py
+sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/site-packages/lsb_release.py
 }
 
 piprelease() {
@@ -262,7 +262,7 @@ then
  #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
- #	     pipupgrade $cm1
+ 	     lbrelease 
         fi
          piver=$(python -V 2>&1)
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
@@ -299,12 +299,7 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-	mi=$(lsb_release -a)
-	lsb=$(echo "$?")
-	if [[ ( $lsb > 0 ) ]]
-        then
-		lbrelease
-	fi
+	     lbrelease
  	     pipupgrade $cm1
              declare -i pipver1
               
@@ -356,7 +351,8 @@ then
 	      sudo ln -sf $link /usr/bin/python 
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
-              eval "pip3.${piver33} install --upgrade pip"
+              lbrelease
+	      eval "pip3.${piver33} install --upgrade pip"
               eval "pip3.${piver33} install awscli"
               eval "pip3.${piver33} install boto"
               eval "pip3.${piver33} install boto3"
@@ -366,6 +362,7 @@ then
               echo "Success"
 
 	      echo `python -V`
+	      lbrelease
 	      pipver=$( echo "pip -V")
 	      pipech=$( echo "$?" )
 	      if [ $pipech > 0 ]
