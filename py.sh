@@ -23,6 +23,14 @@ slpy="python$se3"
 sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python
 }
 
+sslupdate() {
+sudo apt-get -y install build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+curl https://www.openssl.org/source/openssl-1.0.2o.tar.gz | tar xv
+cd openssl-1.0.2o
+sudo ./configure shared --prefix=/usr/local
+sudo make
+sudo make install
+}
 
 pipupgrade () {
       pipargs="$#"
@@ -177,6 +185,7 @@ then
 	cm2="apt-key"
 	sudo $cm1 -y install gcc make wget
         zlibadd
+	sslupdate
         count=1
         fi
 
