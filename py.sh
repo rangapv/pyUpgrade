@@ -103,7 +103,11 @@ line1="#!/usr/local/bin/python${piver112}"
 fi
 
 sudo sed -i "1s|^.*|${line1}|" $file2 
-#sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1 
+#sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
+line3="pip._internal.cli.main"
+line4="pip._internal"
+sudo sed -i "s|${line3}|${line4}|g" $file2
+
 }
 
 if [ $(echo "$li" | grep Linux) ]
@@ -351,7 +355,6 @@ then
 	      sudo ln -sf $link /usr/bin/python 
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
-              lbrelease
 	      eval "pip3.${piver33} install --upgrade pip"
               eval "pip3.${piver33} install awscli"
               eval "pip3.${piver33} install boto"
@@ -362,7 +365,6 @@ then
               echo "Success"
 
 	      echo `python -V`
-	      lbrelease
 	      pipver=$( echo "pip -V")
 	      pipech=$( echo "$?" )
 	      if [ $pipech > 0 ]
