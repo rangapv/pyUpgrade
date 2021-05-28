@@ -383,6 +383,7 @@ then
 	      then
 		   piprelease
 	      fi
+	      piprelease 3
 	      nw="pip3"
 	      ne="."
               newpip="${nw}${ne}${piver33}"
