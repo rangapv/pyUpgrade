@@ -110,7 +110,6 @@ line1="#!/usr/local/bin/python3.6"
 else
 line1="#!/usr/local/bin/python${piver112}"
 fi
-echo "inside piprelease $ki"
 if [[ $ki != "amzn" ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
