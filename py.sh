@@ -110,13 +110,15 @@ line1="#!/usr/local/bin/python3.6"
 else
 line1="#!/usr/local/bin/python${piver112}"
 fi
-
+echo "inside piprelease $ki"
+if [[ $ki != "amzn" ]]
+then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 #sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
 line3="pip._internal.cli.main"
 line4="pip._internal"
 sudo sed -i "s|${line3}|${line4}|g" $file2
-
+fi
 }
 
 if [ $(echo "$li" | grep Linux) ]
