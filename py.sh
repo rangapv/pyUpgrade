@@ -110,6 +110,13 @@ line1="#!/usr/local/bin/python3.6"
 else
 line1="#!/usr/local/bin/python${piver112}"
 fi
+line3="#!/usr/local/bin/python3.6"
+file3="/usr/local/bin/pip"
+sudo sed -i "1s|^.*|${line3}|" $file3
+line31="pip._internal.cli.main"
+line41="pip._internal"
+sudo sed -i "s|${line31}|${line41}|g" $file3
+
 if [[ $piver112 = "3.6" ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
