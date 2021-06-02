@@ -110,7 +110,7 @@ line1="#!/usr/local/bin/python3.6"
 else
 line1="#!/usr/local/bin/python${piver112}"
 fi
-if [[ $ki != "amzn" ]]
+if [[ $piver112 = "3.6" ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 #sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
