@@ -112,6 +112,9 @@ line1="#!/usr/local/bin/python${piver112}"
 fi
 file1="/usr/local/bin/pip${args1}"
 sudo sed -i "1s|^.*|${line1}|g" $file1
+line21="pip._internal.cli.main"
+line22="pip._internal"
+sudo sed -i "s|${line22}|${line21}|g" $file1
 
 line3="#!/usr/local/bin/python3.6"
 file3="/usr/local/bin/pip"
