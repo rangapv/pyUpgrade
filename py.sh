@@ -112,23 +112,23 @@ line1="#!/usr/local/bin/python${piver112}"
 fi
 file1="/usr/local/bin/pip${args1}"
 sudo sed -i "1s|^.*|${line1}|g" $file1
-line21="pip._internal.cli.main"
-line22="pip._internal"
+line21="from pip._internal.cli.main import main"
+line22="from pip._internal import main"
 sudo sed -i "s|${line22}|${line21}|g" $file1
 
 line3="#!/usr/local/bin/python3.6"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
-line31="pip._internal.cli.main"
-line41="pip._internal"
+line31="from pip._internal.cli.main import main"
+line41="from pip._internal import main"
 sudo sed -i "s|${line31}|${line41}|g" $file3
 
 if [[ $piver112 = "3.6" ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 #sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
-line3="pip._internal.cli.main"
-line4="pip._internal"
+line3="from pip._internal.cli.main import main"
+line4="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
 fi
 }
