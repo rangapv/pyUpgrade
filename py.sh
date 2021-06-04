@@ -91,6 +91,14 @@ sudo sed -i "1s|^.*|${line1}|" $file1
 sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/site-packages/lsb_release.py
 }
 
+
+yummy() {
+filey="/usr/bin/yum"
+yum1="#!/usr/bin/python2"
+sudo sed -i "1s|^.*|${yum1}|" $filey
+}
+
+
 piprelease() {
 pargs="$#"
 args=("$@")
@@ -244,6 +252,7 @@ then
 	if [ $ki = "amzn" ]
 	then
 	   echo "It is amazon AMI"
+	   yummy
 	   count=1
 	elif [ $ki = "rhel" ]
 	then 
