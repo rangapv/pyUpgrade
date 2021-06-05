@@ -268,11 +268,13 @@ then
 	fi
         yummy
         cm1="yum"
+        link=$(readlink -f `which /usr/bin/python`)
+	sudo ln -sf /usr/bin/python2 /usr/bin/python
 	sudo $cm1 -y update
         sudo $cm1 -y install wget
 	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo $cm1 -y install @development
-
+        sudo ln -sf $link /usr/bin/python 
 elif [ ! -z "$mac" ]
 then
 	echo "It is a Mac"
