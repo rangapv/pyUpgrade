@@ -96,6 +96,8 @@ yummy() {
 filey="/usr/bin/yum"
 yum1="#!/usr/bin/python2"
 sudo sed -i "1s|^.*|${yum1}|" $filey
+filez="/bin/yum"
+sudo sed -i "1s|^.*|${yum1}|" $filez
 }
 
 
@@ -252,7 +254,6 @@ then
 	if [ $ki = "amzn" ]
 	then
 	   echo "It is amazon AMI"
-	   yummy
 	   count=1
 	elif [ $ki = "rhel" ]
 	then 
@@ -265,17 +266,12 @@ then
 	else
 	   echo "OS flavor cant be determined"
 	fi
+        yummy
         cm1="yum"
-	if  [[ $count = 1 ]] 
-	then
-        link=$(readlink -f `which /usr/bin/python`)
-	sudo ln -sf /usr/bin/python2 /usr/bin/python
 	sudo $cm1 -y update
         sudo $cm1 -y install wget
 	sudo $cm1 -y install gcc make openssl-devel bzip2-devel libffi-devel zlib-devel wget
         sudo $cm1 -y install @development
-	sudo ln -sf $link /usr/bin/python 
-	fi
 
 elif [ ! -z "$mac" ]
 then
@@ -379,15 +375,15 @@ then
 	      if [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 	      then
               link=$(readlink -f `which /usr/bin/python`)
-	      sudo ln -sf /usr/bin/python2 /usr/bin/python
-	      eval "sudo $cm1 install -y python3-pip"
+	      sudo ln -sf /usr/bin/python2 /usr/bin/python	     
+              eval "sudo $cm1 install -y python3-pip"
               eval "pip install --upgrade pip"
               eval "pip install awscli"
               eval "pip install boto"
               eval "pip install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
-	      sudo ln -sf $link /usr/bin/python 
+              sudo ln -sf $link /usr/bin/python
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
 	      eval "pip3.${piver33} install --upgrade pip"
