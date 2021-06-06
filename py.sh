@@ -92,6 +92,13 @@ sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/sit
 }
 
 
+
+lsbrelease() {
+sudo ln -sf /usr/bin/python2 /usr/bin/python
+sudo yum -y install redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+
+}
+
 yummy() {
 filey="/usr/bin/yum"
 yum1="#!/usr/bin/python2"
@@ -249,6 +256,12 @@ then
 
 elif [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 then
+	mi=$(lsb_release -cs)
+	lsb=$(echo "$?")
+	if [[ ( $lsb > 0 ) ]]
+        then
+		lsbrelease
+	fi
         ji=$(cat /etc/*-release | grep '^ID=' |awk '{split($0,a,"\"");print a[2]}')
         ki="${ji,,}"
 	if [ $ki = "amzn" ]
