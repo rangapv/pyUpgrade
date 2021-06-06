@@ -100,6 +100,9 @@ sudo yum -y install redhat-lsb-core-4.1-27.el7.centos.1.x86_64
 file10="/usr/bin/lsb_release"
 line10="#!/usr/bin/python2"
 sudo ln -sf $link /usr/bin/python
+file11="/usr/libexec/urlgrabber-ext-down"
+sudo sed -i "1s|^.*|${line10}|" $file11 
+
 }
 
 yummy() {
@@ -139,8 +142,15 @@ sudo sed -i "s|${line22}|${line21}|g" $file1
 line3="#!/usr/local/bin/python3.6"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
+c1=$(cat /etc/*-release | grep ID= | grep centos)
+if [[ ! -z $c1 ]]
+then
+line41="from pip._internal.cli.main import main"
+line31="from pip._internal import main"
+else
 line31="from pip._internal.cli.main import main"
 line41="from pip._internal import main"
+fi
 sudo sed -i "s|${line31}|${line41}|g" $file3
 
 if [[ $piver112 = "3.6" ]]
