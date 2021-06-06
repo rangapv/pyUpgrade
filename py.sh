@@ -94,9 +94,10 @@ sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/sit
 
 
 lsbrelease() {
+link=$(readlink -f `which /usr/bin/python`)
 sudo ln -sf /usr/bin/python2 /usr/bin/python
 sudo yum -y install redhat-lsb-core-4.1-27.el7.centos.1.x86_64
-
+sudo ln -sf $link /usr/bin/python
 }
 
 yummy() {
