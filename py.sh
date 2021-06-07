@@ -159,7 +159,7 @@ sudo sed -i "1s|^.*|${line1}|" $file2
 line3="from pip._internal.cli.main import main"
 line4="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
-elif [[ $piver112 = "3.6" && ! -z $c1 ]]
+elif [[ $piver112 = "3.6" &&  ! -z $c1  ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 line4="from pip._internal.cli.main import main"
@@ -330,7 +330,7 @@ then
  #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-             if [[ -z $c1 ]]
+             if [[ -z $c1 || -z $a1 ]]
              then
  	     lbrelease 
              fi
@@ -370,7 +370,7 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-             if [ -z $c1 ]
+             if [ -z $c1 || -z $a1 ]
              then
 	     lbrelease
              fi
