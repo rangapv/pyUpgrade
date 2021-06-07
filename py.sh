@@ -153,13 +153,19 @@ line41="from pip._internal import main"
 fi
 sudo sed -i "s|${line31}|${line41}|g" $file3
 
-if [[ $piver112 = "3.6" ]]
+if [ $piver112 = "3.6" && -z $c1 ]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
-#sudo sed -i '1s/.*/\#\!\/usr\/bin\/python3.7/' $file1
 line3="from pip._internal.cli.main import main"
 line4="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
+elif [ $piver112 = "3.6" && ! -z $c1 ]
+then
+sudo sed -i "1s|^.*|${line1}|" $file2 
+line4="from pip._internal.cli.main import main"
+line3="from pip._internal import main"
+sudo sed -i "s|${line3}|${line4}|g" $file2
+else
 fi
 }
 
@@ -325,7 +331,10 @@ then
  #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-# 	     lbrelease 
+             if [[ -z $c1 ]]
+             then
+ 	     lbrelease 
+             fi
         fi
          piver=$(python -V 2>&1)
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
@@ -362,7 +371,10 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-#	     lbrelease
+             if [ -z $c1 ]
+             then
+	     lbrelease
+             fi
  	     pipupgrade $cm1
              declare -i pipver1
               
