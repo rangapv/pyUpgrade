@@ -153,19 +153,18 @@ line41="from pip._internal import main"
 fi
 sudo sed -i "s|${line31}|${line41}|g" $file3
 
-if [ $piver112 = "3.6" && -z $c1 ]
+if [[ $piver112 = "3.6" && -z $c1 ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 line3="from pip._internal.cli.main import main"
 line4="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
-elif [ $piver112 = "3.6" && ! -z $c1 ]
+elif [[ $piver112 = "3.6" && ! -z $c1 ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 line4="from pip._internal.cli.main import main"
 line3="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
-else
 fi
 }
 
