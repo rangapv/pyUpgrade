@@ -337,7 +337,7 @@ then
  #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-             if [[ -z $c1 || -z $a1 ]]
+             if [[ -z $c1 && -z $a1 ]]
              then
  	     lbrelease 
              fi
@@ -377,7 +377,7 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-             if [ -z $c1 || -z $a1 ]
+             if [[ -z $c1 && -z $a1 ]]
              then
 	     lbrelease
              fi
