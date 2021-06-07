@@ -100,15 +100,15 @@ if [[ ! -z $c1 ]]
 then
 sudo yum -y install redhat-lsb-core-4.1-27.el7.centos.1.x86_64
 file10="/usr/bin/lsb_release"
-line10="#!/usr/bin/python2"
-sudo ln -sf $link /usr/bin/python
-file11="/usr/libexec/urlgrabber-ext-down"
-sudo sed -i "1s|^.*|${line10}|" $file11 
 fi
 if [[ ! -z $a1 ]]
 then
 sudo yum -y install system-lsb-core-4.1-27.amzn2.1.x86_64
 fi
+line10="#!/usr/bin/python2"
+sudo ln -sf $link /usr/bin/python
+file11="/usr/libexec/urlgrabber-ext-down"
+sudo sed -i "1s|^.*|${line10}|" $file11 
 
 }
 
