@@ -99,14 +99,16 @@ sudo ln -sf /usr/bin/python2 /usr/bin/python
 if [[ ! -z $c1 ]]
 then
 sudo yum -y install redhat-lsb-core-4.1-27.el7.centos.1.x86_64
-file10="/usr/bin/lsb_release"
+fi
+if [[ ! -z $r1 ]]
+then
+sudo yum -y install redhat-lsb-core-4.1-27.el7.x86_64 
 fi
 if [[ ! -z $a1 ]]
 then
 sudo yum -y install system-lsb-core-4.1-27.amzn2.1.x86_64
 fi
 line10="#!/usr/bin/python2"
-sudo ln -sf $link /usr/bin/python
 file11="/usr/libexec/urlgrabber-ext-down"
 sudo sed -i "1s|^.*|${line10}|" $file11 
 
@@ -150,7 +152,7 @@ line3="#!/usr/local/bin/python3.6"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
 c1=$(cat /etc/*-release | grep ID= | grep centos)
-if [[ ! -z $c1 ]]
+if [[ ! -z $c1 || ! -z $r1 ]]
 then
 line41="from pip._internal.cli.main import main"
 line31="from pip._internal import main"
@@ -160,13 +162,13 @@ line41="from pip._internal import main"
 fi
 sudo sed -i "s|${line31}|${line41}|g" $file3
 
-if [[ $piver112 = "3.6" && -z $c1 ]]
+if [[ $piver112 = "3.6" && -z $c1 && -z $r1 ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 line3="from pip._internal.cli.main import main"
 line4="from pip._internal import main"
 sudo sed -i "s|${line3}|${line4}|g" $file2
-elif [[ $piver112 = "3.6" &&  ! -z $c1  ]]
+elif [[ $piver112 = "3.6" &&  ( ! -z $c1 || ! -z $r1 ) ]]
 then
 sudo sed -i "1s|^.*|${line1}|" $file2 
 line4="from pip._internal.cli.main import main"
@@ -338,7 +340,7 @@ then
  #       pipupgrade $cm1
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-	     if [[ -z $c1 && -z $a1 && ( ! -z $d1 || ! -z u1 ) ]]
+	     if [[ -z $r1 && -z $c1 && -z $a1 && ( ! -z $d1 || ! -z u1 ) ]]
              then
  	     lbrelease 
              fi
@@ -378,7 +380,7 @@ then
            	*) 
 			echo "Doing Nothing"
 	esac
-	if [[ -z $c1 && -z $a1 && ( ! -z $d1 || ! -z $u1 ) ]]
+             if [[ -z $r1 &&  -z $c1 && -z $a1 && ( ! -z $d1 || ! -z $u1 ) ]]
              then
 	     lbrelease
              fi
