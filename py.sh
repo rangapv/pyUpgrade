@@ -152,7 +152,7 @@ line3="#!/usr/local/bin/python3.6"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
 c1=$(cat /etc/*-release | grep ID= | grep centos)
-if [[ ! -z $c1 || ! -z $r1 ]]
+if [[ ! -z $c1 || ! -z $r1 || ! -z $s1 ]]
 then
 line41="from pip._internal.cli.main import main"
 line31="from pip._internal import main"
@@ -269,7 +269,7 @@ then
         if [ $ki = "sles" ]
         then
         echo " it is SUSE"
-        sudo zypper install -y gcc make openssl-devel libffi-devel zlib-devel wget
+        sudo zypper install -y gcc make openssl-devel libffi-devel zlib-devel wget lsb-release
 	count=1
         fi
 elif [ ! -z "$fc1" ]
