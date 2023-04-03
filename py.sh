@@ -370,7 +370,19 @@ then
                         fi
                         if [ $piver33 = "9" ]
                         then
-                          pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.5 Python-3.10.5.tgz 
+                        fi
+                        if [ $piver33 = "10" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.9 Python-3.10.9.tgz 
+                        fi
+                        if [ $piver33 = "11" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.11.2 Python-3.11.2.tgz 
+                        fi
+                        if [ $piver33 = "12" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.12.0 Python-3.12.0a1.tgz 
                         fi
 		;;
                 2)
