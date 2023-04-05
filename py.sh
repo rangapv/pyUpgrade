@@ -97,6 +97,7 @@ sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/sit
 pythonwhich() {
 pywh3=`(which python3)`
 pywh3s="$?"
+pyt="t"
 if [[(( $pywh3s -ne 0 )) ]]
 then
    pywh2=`(which python)`
@@ -487,4 +488,16 @@ then
               newpip="${nw}${ne}${piver33}"
 	      piprelease "${piver12}${ne}${piver33}"
  	      echo `${newpip} -V`
+
+
+
+   pythonwhich
+   if [[ "$pyt" == "python3" ]]
+   then
+	   sudo ln -sf /usr/bin/python3 /usr/bin/python
+   fi
+
 fi
+
+
+
