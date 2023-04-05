@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 set -E
 li=$(uname -s)
+pyt="t"
 
 pyupgrade() {
 pargs="$#"
@@ -37,7 +38,8 @@ pipupgrade () {
       pipargs="$#"
       pargs=("$@")
       pargs1=${pargs[$((pipargs-pipargs))]}
-      piver=$(python -V 2>&1)
+      pythonwhich
+      piver=$(pyt -V 2>&1)
       piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
       piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
       piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
@@ -79,7 +81,8 @@ zlibadd() {
 
 lbrelease() {
 file1="/usr/bin/lsb_release"
-piver=$(python -V 2>&1)
+pythonwhich
+#piver=$(python -V 2>&1)
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
@@ -90,6 +93,22 @@ sudo sed -i "1s|^.*|${line1}|" $file1
 
 sudo ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python${pyvert}/site-packages/lsb_release.py
 }
+
+pythonwhich() {
+pywh3=`(which python3)`
+pywh3s="$?"
+if [[(( $pywh3s -ne 0 )) ]]
+then
+   pywh2=`(which python)`
+   piver=$(python -V 2>&1)
+   pywh2s ="$?"
+   pyt="python"
+else
+  pyt="python3"
+fi
+
+}
+
 
 
 
@@ -130,15 +149,17 @@ args=("$@")
 args1=${args[$((pargs-pargs))]}
 newpip="pip${args1}"
 file2=$( echo `which ${newpip}`)
-piver=$(python -V 2>&1)
+pythonwhich
+piver=`($pyt -V 2>&1)`
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
 piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
 
-pippy=`which python`
-stpippy=`$pippy | grep -oh "[a-z/]*"`
-pyverpip=`$pippy | awk '{split($0,a," "); print a[2]}' | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[1]"."a[2];}'`
+pythonwhich
+pippy=`which $pyt`
+stpippy=`echo "$pippy" | grep -oh "[a-z/]*"`
+pyverpip=`$pyt -V | awk '{split($0,a," "); print a[2]}' | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[1]"."a[2];}'`
 
 if [[ $pargs -eq 0 ]]
 then
@@ -338,7 +359,8 @@ then
 	then	
 	pi=$(python --version)
         #pi1="${pi,,}"
-	piver=$(python -V 2>&1)
+	pythonwhich
+	piver=`(echo "$pyt" -V 2>&1)`
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
@@ -350,7 +372,8 @@ then
  	     lbrelease 
              fi
         fi
-         piver=$(python -V 2>&1)
+	 pythonwhich
+         piver=`(echo "$pyt" -V 2>&1)`
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
          piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
          piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
@@ -391,8 +414,9 @@ then
              fi
  	     pipupgrade $cm1
              declare -i pipver1
-              
-             piver=$(python -V 2>&1)
+             
+	     pythonwhich 
+             piver=`(echo "$pyt" -V 2>&1)`
              piver11=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
              piver12=$( echo "${piver11}" | awk '{split($0,a,".");print a[1]}')
              piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
@@ -416,10 +440,11 @@ then
              else
               echo "pipver is >21"
              fi
-              piver=$(python -V 2>&1)
+	      pythonwhich
+              piver=`(echo "$pyt" -V 2>&1)`
               piverec=$(echo "$?")
 	      piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-	      piverwh=$(which python)
+	      piverwh=$(which pyt)
 	      piverwhec=$(echo "$?")
 	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) && ( $piverwhec < 1) && ($piverec < 1) ]]
               then
