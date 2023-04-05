@@ -135,12 +135,17 @@ piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
 piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+
+pippy=`which python`
+stpippy=`$pippy | grep -oh "[a-z/]*"`
+pyverpip=`$pippy | awk '{split($0,a," "); print a[2]}' | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[1]"."a[2];}'`
+
 if [[ $pargs -eq 0 ]]
 then
 piver112="2"
-line1="#!/usr/local/bin/python3.6"
+line1="#!$stpippy$pyverpip"
 else
-line1="#!/usr/local/bin/python${piver112}"
+line1="#!$stpippy$pyverpip"
 fi
 file1="/usr/local/bin/pip${args1}"
 sudo sed -i "1s|^.*|${line1}|g" $file1
@@ -148,7 +153,7 @@ line21="from pip._internal.cli.main import main"
 line22="from pip._internal import main"
 sudo sed -i "s|${line22}|${line21}|g" $file1
 
-line3="#!/usr/local/bin/python3.6"
+line3="#!$stpippy$pyverpip"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
 c1=$(cat /etc/*-release | grep ID= | grep centos)
@@ -370,19 +375,7 @@ then
                         fi
                         if [ $piver33 = "9" ]
                         then
-                          pyupgrade https://www.python.org/ftp/python/ 3.10.5 Python-3.10.5.tgz 
-                        fi
-                        if [ $piver33 = "10" ]
-                        then
-                          pyupgrade https://www.python.org/ftp/python/ 3.10.9 Python-3.10.9.tgz 
-                        fi
-                        if [ $piver33 = "11" ]
-                        then
-                          pyupgrade https://www.python.org/ftp/python/ 3.11.2 Python-3.11.2.tgz 
-                        fi
-                        if [ $piver33 = "12" ]
-                        then
-                          pyupgrade https://www.python.org/ftp/python/ 3.12.0 Python-3.12.0a1.tgz 
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
                         fi
 		;;
                 2)
