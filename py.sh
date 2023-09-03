@@ -204,6 +204,16 @@ sudo sed -i "s|${line3}|${line4}|g" $file2
 fi
 }
 
+currentpy() {
+
+
+pyc1=`which python`
+
+
+}
+
+
+
 if [ $(echo "$li" | grep Linux) ]
 then
   mac=""
@@ -230,6 +240,11 @@ count=0
 
 if [ ! -z "$u1" ]
 then 
+        pc2=`which python`
+	pc2s="$?"
+	echo "python release is $pc2 and status is $pc2s"
+	if [ "$pc2s" -ne 0 ]
+	then
 	mi=$(lsb_release -cs)
 	lsb=$(echo "$?")
 	if [[ ( $lsb > 0 ) ]]
@@ -239,6 +254,7 @@ then
 	mi2="${mi,,}"
 	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
 	ki="${ji,,}"
+
 
 	if [ "$ki" = "ubuntu" ]
 	then
@@ -252,8 +268,9 @@ then
 	sudo $cm1 -y update
 	zlibadd
 	sslupdate $cm1 
-	count=1
 	fi
+	fi
+	count=1
 elif [ ! -z "$d1" ]
 then
 	mi=$(lsb_release -cs)
@@ -353,9 +370,11 @@ else
 fi
 pi=$(python --version)
 ret=$( echo "$?")
+echo "ret is $ret"
 if [[ $count > 0 ]] 
 then
-
+	echo "inside count"
+      echo "Python version is $pi"
         if [[ $ret < 1 ]]
 	then	
 	pi=$(python --version)
@@ -366,6 +385,7 @@ then
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
  #       pipupgrade $cm1
+         echo "inside ret "
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
 	     if [[ -z $r1 && -z $c1 && -z $a1 && ( ! -z $d1 || ! -z u1 ) ]]
@@ -374,42 +394,56 @@ then
              fi
         fi
 	 pythonwhich
-         piver=`(echo "$pyt" -V 2>&1)`
+	 #echo "pyt is $pyt"
+         piver=`($pyt -V 2>&1)`
+	 #echo "piver is $piver"
          piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
+	 #echo "piver1 is $piver1"
          piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
-         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-        
+	 #echo "piver12 is $piver12"
+
+         #piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+
+         piver33=$(echo "$piver" | awk '{l=index($0,"."); print substr($0,l+1)}')
+	 #echo "piver33 is $piver33"
+       
+         echo "Current version of Python is $(python --version)"
+	 echo "Pls input the version to upgrade to (available verison are 8.7/9.4/10.9/10.12/11.4/11.5/12.0" 
+         read -r inputpyver
+         if [ ! -z "$inputpyver" ]
+	 then
+		 echo "inside inputpyver"
+		 echo "piver33 is $piver33"
+		 piver33="$inputpyver"
+	 fi
+
         case ${piver12} in
 		3)
                         if [ $piver33 = "6.12" ]
                         then
-                         pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
-			fi
-                        if [ $piver33 = "8.7" ]
-                        then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
                         fi
-                        if [ $piver33 = "9.4" ]
+                        if [ $piver33 = "8.7" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
                         fi
-                        if [ $piver33 = "10.9" ]
+                        if [ $piver33 = "9.4" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.9 Python-3.10.9.tgz
        			fi                 
-			if [ $piver33 = "10.12" ]
+			if [ $piver33 = "10.9" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.12 Python-3.10.12.tgz 
                         fi
-                        if [ $piver33 = "11.4" ]
+                        if [ $piver33 = "10.12" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.11.4 Python-3.11.4.tgz 
                         fi
-                        if [ $piver33 = "11.5" ]
+                        if [ $piver33 = "11.4" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.11.5 Python-3.11.5.tgz 
                         fi
-                        if [ $piver33 = "12" ]
+                        if [ $piver33 = "11.5" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.12.0 Python-3.12.0a1.tgz  
                         fi
