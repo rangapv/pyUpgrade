@@ -381,25 +381,37 @@ then
         
         case ${piver12} in
 		3)
-                        if [ $piver33 = "5" ]
+                        if [ $piver33 = "6.12" ]
                         then
                          pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
 			fi
-                        if [ $piver33 = "6" ]
-                        then
-                          pyupgrade https://www.python.org/ftp/python/ 3.7.9 Python-3.7.9.tgz
-                        fi
-                        if [ $piver33 = "7" ]
+                        if [ $piver33 = "8.7" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.8.7 Python-3.8.7.tgz 
                         fi
-                        if [ $piver33 = "8" ]
+                        if [ $piver33 = "9.4" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.9.4 Python-3.9.4.tgz 
                         fi
-                        if [ $piver33 = "9" ]
+                        if [ $piver33 = "10.9" ]
                         then
-                          pyupgrade https://www.python.org/ftp/python/ 3.10.0 Python-3.10.0a6.tgz 
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.9 Python-3.10.9.tgz
+       			fi                 
+			if [ $piver33 = "10.12" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.10.12 Python-3.10.12.tgz 
+                        fi
+                        if [ $piver33 = "11.4" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.11.4 Python-3.11.4.tgz 
+                        fi
+                        if [ $piver33 = "11.5" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.11.5 Python-3.11.5.tgz 
+                        fi
+                        if [ $piver33 = "12" ]
+                        then
+                          pyupgrade https://www.python.org/ftp/python/ 3.12.0 Python-3.12.0a1.tgz  
                         fi
 		;;
                 2)
