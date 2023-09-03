@@ -74,9 +74,21 @@ zlibadd() {
         sudo ./configure
         sudo make
         sudo make install
-        echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc  
+        ld1=`cat $HOME/.bashrc | grep "export LDFLAGS="`
+        if [[ ( ! -z "$ld1" ) ]]
+	then
+	echo "export LDFLAGS=${LDFLAGS} -L/usr/local/lib" >> ~/.bashrc  
+        fi
+       	ld2=`cat $HOME/.bashrc | grep "export CPPFLAGS="`
+	if [[ ( ! -z "$ld2" ) ]]
+	then
 	echo "export CPPFLAGS=${CPPFLAGS} -I/usr/local/include" >> ~/.bashrc
+    	fi
+    	ld3=`cat $HOME/.bashrc | grep "export PKG_CONFIG_PATH="`
+        if [[ ( ! -z "$ld3" ) ]]
+	then
 	echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH} /usr/local/lib/pkgconfig" >> ~/.bashrc
+	fi
 }
 
 lbrelease() {
@@ -408,12 +420,11 @@ then
 	 #echo "piver33 is $piver33"
        
          echo "Current version of Python is $(python --version)"
-	 echo "Pls input the version to upgrade to (available verison are 8.7/9.4/10.9/10.12/11.4/11.5/12.0" 
+	 echo "Pls input the version to upgrade to (available verison are 8.7/9.4/10.9/10.12/11.4/11.5/12.0)" 
          read -r inputpyver
          if [ ! -z "$inputpyver" ]
 	 then
-		 echo "inside inputpyver"
-		 echo "piver33 is $piver33"
+		 #echo "piver33 is $piver33"
 		 piver33="$inputpyver"
 	 fi
 
@@ -544,6 +555,4 @@ then
    fi
 
 fi
-
-
 
