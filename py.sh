@@ -17,18 +17,20 @@ tar xzf $pyver3
 se1=$( echo "${pyver3}" | awk '{split($0,a,".");print a[1]"."a[2]"."a[3]}')
 se2=$( echo "${pyver3}" | awk '{split($0,a,".");print a[1]"."a[2]}')
 se3=$( echo "${pyver2}" | awk '{split($0,a,".");print a[1]"."a[2]}')
+#se3="$pyver2"
 cd $se1 
 sudo ./configure --enable-optimizations
 sudo make altinstall
 slpy="python$se3"
-sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python
+`sudo ln -sf "/usr/local/bin/$slpy" /usr/bin/python`
+echo "PYTHON is $(python -V)"
 }
 
 sslupdate() {
 cm1="$@"
 sudo $cm1 -y install build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
-curl https://www.openssl.org/source/openssl-1.0.2o.tar.gz | tar xz
-cd openssl-1.0.2o
+curl https://www.openssl.org/source/openssl-3.0.10.tar.gz | tar xz
+cd openssl-3.0.10 
 sudo ./config shared --prefix=/usr/local
 sudo make
 sudo make install
@@ -46,12 +48,12 @@ pipupgrade () {
 
       if [ $piver12 = "2" ]
       then
-	 sudo $pargs1 install -y python-pip
+	 sudo $pargs1 install python-pip
          sudo pip install --upgrade pip
 	 piprelease
       elif [ $piver12 = "3" ]
       then
-         sudo $pargs1 install -y python3-pip
+         sudo $pargs1 install python3-pip
 	 sudo pip3 install --upgrade pip
 	 piprelease 3
       else
@@ -114,7 +116,7 @@ if [[(( $pywh3s -ne 0 )) ]]
 then
    pywh2=`(which python)`
    piver=$(python -V 2>&1)
-   pywh2s ="$?"
+   pywh2s="$?"
    pyt="python"
 else
   pyt="python3"
@@ -164,10 +166,11 @@ newpip="pip${args1}"
 file2=$( echo `which ${newpip}`)
 pythonwhich
 piver=`($pyt -V 2>&1)`
+
 piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
 piver112=$( echo "${piver1}" | awk '{split($0,a,"."); for (i=1; i<2 ; i++) print a[i]"."a[i+1]; }')
-piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+#piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
 
 pythonwhich
 pippy=`which $pyt`
@@ -181,13 +184,15 @@ line1="#!$stpippy$pyverpip"
 else
 line1="#!$stpippy$pyverpip"
 fi
+line1="#!/usr/bin/python"
 file1="/usr/local/bin/pip${args1}"
 sudo sed -i "1s|^.*|${line1}|g" $file1
 line21="from pip._internal.cli.main import main"
 line22="from pip._internal import main"
 sudo sed -i "s|${line22}|${line21}|g" $file1
 
-line3="#!$stpippy$pyverpip"
+#line3="#!$stpippy$pyverpip"
+line3="#!/usr/bin/python"
 file3="/usr/local/bin/pip"
 sudo sed -i "1s|^.*|${line3}|" $file3
 c1=$(cat /etc/*-release | grep ID= | grep centos)
@@ -386,7 +391,7 @@ echo "ret is $ret"
 if [[ $count > 0 ]] 
 then
 	echo "inside count"
-      echo "Python version is $pi"
+        echo "Python version is $pi"
         if [[ $ret < 1 ]]
 	then	
 	pi=$(python --version)
@@ -396,8 +401,8 @@ then
 	piver1=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
 	piver12=$( echo "${piver1}" | awk '{split($0,a,".");print a[1]}')
         piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
- #       pipupgrade $cm1
-         echo "inside ret "
+        pipupgrade $cm1
+ #        echo "inside ret "
         else
              pyupgrade https://www.python.org/ftp/python/ 3.6.12 Python-3.6.12.tgz
 	     if [[ -z $r1 && -z $c1 && -z $a1 && ( ! -z $d1 || ! -z u1 ) ]]
@@ -446,15 +451,15 @@ then
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.10.12 Python-3.10.12.tgz 
                         fi
-                        if [ $piver33 = "10.12" ]
+                        if [ $piver33 = "11.4" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.11.4 Python-3.11.4.tgz 
                         fi
-                        if [ $piver33 = "11.4" ]
+                        if [ $piver33 = "11.5" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.11.5 Python-3.11.5.tgz 
                         fi
-                        if [ $piver33 = "11.5" ]
+                        if [ $piver33 = "12.0" ]
                         then
                           pyupgrade https://www.python.org/ftp/python/ 3.12.0 Python-3.12.0a1.tgz  
                         fi
@@ -476,9 +481,10 @@ then
 	     pythonwhich 
              piver=`(echo "$pyt" -V 2>&1)`
              piver11=$( echo "${piver}" | awk '{split($0,a," ");print a[2]}')
-             piver12=$( echo "${piver11}" | awk '{split($0,a,".");print a[1]}')
-             piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
-             pipadd="pip3.${piver33}"
+	     piver35=$( echo "${piver11}" | awk '{l=split($0,a,".");for(i=1;i<l-1;i++) print a[i]"."a[i+1];}')
+	     #piver33=$( echo "${piver11}" | awk '{l=split($0,a,".");for(i=1;i<l-1;i++) print a[i]"."a[i+1];})')
+	     piver33=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+             pipadd="pip${piver35}"
 	     pipv=$( echo "$pipadd --version")
              pipret=$( echo "$?" )
 	     pipver1=100
@@ -501,13 +507,14 @@ then
 	      pythonwhich
               piver=`(echo "$pyt" -V 2>&1)`
               piverec=$(echo "$?")
-	      piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
+              piver34=$(echo "${piver}" | awk '{split($0,a," "); print a[2]}')
+	     # piver34=$( echo "${piver}" | awk '{split($0,a,".");print a[2]}')
 	      piverwh=$(which pyt)
 	      piverwhec=$(echo "$?")
 	      if [[ ( ! -z "$u1" || ! -z "$d1" ) && ( $piver34 = "6" ) && ( $piverwhec < 1) && ($piverec < 1) ]]
               then
               eval "sudo ln -sf /usr/local/bin/python3.6 /usr/bin/python3"
-              eval "sudo ln -sf /usr/bin/python3 /usr/bin/python"
+              eval "sudo ln -sf /usr/bin/python /usr/bin/python3"
 	      fi
 	      if [[ ! -z "$c1" || ! -z "$r1" || ! -z "$a1" ]]
 	      then
@@ -523,10 +530,10 @@ then
               sudo ln -sf $link /usr/bin/python
 	      else     
 	      eval "sudo $cm1 install -y python3-pip"
-	      eval "pip3.${piver33} install --upgrade pip"
-              eval "pip3.${piver33} install awscli"
-              eval "pip3.${piver33} install boto"
-              eval "pip3.${piver33} install boto3"
+	      eval "pip3 install --upgrade pip"
+              eval "pip3 install awscli"
+              eval "pip3 install boto"
+              eval "pip3 install boto3"
               eval "sudo $cm1 install -y python-boto"
               eval "sudo $cm1 install -y python-boto3"
 	      fi
@@ -540,18 +547,17 @@ then
 		   piprelease
 	      fi
 	      piprelease 3
-	      nw="pip3"
-	      ne="."
-              newpip="${nw}${ne}${piver33}"
-	      piprelease "${piver12}${ne}${piver33}"
+	      nw="pip"
+	      #ne="."
+              newpip="${nw}${piver35}"
+	      piprelease ${piver35}
  	      echo `${newpip} -V`
-
 
 
    pythonwhich
    if [[ "$pyt" == "python3" ]]
    then
-	   sudo ln -sf /usr/bin/python3 /usr/bin/python
+	   sudo ln -sf /usr/bin/python /usr/bin/python3
    fi
 
 fi
