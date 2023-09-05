@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 set -E
 li=$(uname -s)
 pyt="t"
@@ -69,9 +69,9 @@ sudo zypper -y install git
 } 
 
 zlibadd() {
-	sudo wget http://www.zlib.net/zlib-1.2.11.tar.gz 
-        tar -xzf ./zlib-1.2.11.tar.gz
-        cd zlib-1.2.11
+	sudo wget http://www.zlib.net/zlib-1.3.tar.gz 
+        tar -xzf ./zlib-1.3.tar.gz
+        cd zlib-1.3
         sudo make distclean
         sudo ./configure
         sudo make
